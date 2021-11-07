@@ -117,7 +117,7 @@ Also, when you are invoking the method later on, you do have to specify both reg
 
 `Application Structure. (APK)`
 
-``![](../.gitbook/assets/image.png)``
+``![](../../.gitbook/assets/image.png)``
 
 * **AndroidManifest.xml**: the manifest file in binary [XML](https://tryhackme.com/room/androidhacking101) format.
 * **classes.dex:** application code compiled in the dex format.

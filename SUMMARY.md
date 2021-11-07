@@ -31,7 +31,8 @@
 
 ## Mobile
 
-* [Android](mobile/android.md)
+* [Android](mobile/android/README.md)
+  * [Methodology](mobile/android/methodology.md)
 * [iOS](mobile/ios.md)
 
 ## Wireless
