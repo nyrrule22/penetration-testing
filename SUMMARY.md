@@ -20,7 +20,7 @@
 ## Vulnerabilities
 
 * [CVEs](vulnerabilities/cves.md)
-* [XXE](vulnerabilities/xxe.md)
+* [XXE (XML External Entity)](vulnerabilities/xxe-xml-external-entity.md)
 
 ## Privilege Escalation
 
