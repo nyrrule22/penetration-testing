@@ -33,6 +33,7 @@
 
 * [Android](mobile/android/README.md)
   * [Methodology](mobile/android/methodology.md)
+  * [Setup and Tools](mobile/android/setup-and-tools.md)
 * [iOS](mobile/ios.md)
 
 ## Wireless
