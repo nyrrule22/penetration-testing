@@ -1,6 +1,6 @@
 # Table of contents
 
-* [penetration-testing](README.md)
+* [README](README.md)
 
 ## Penetration Testing Methodology
 
@@ -20,6 +20,7 @@
 ## Vulnerabilities
 
 * [CVEs](vulnerabilities/cves.md)
+* [XXE](vulnerabilities/xxe.md)
 
 ## Privilege Escalation
 
