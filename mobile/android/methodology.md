@@ -198,6 +198,8 @@ It is based on powerful probabilistic graphical models learned from thousands of
 
 ## Dynamic Analysis
 
+### Getting Started
+
 #### Installing Applications with ADB
 
 `adb install apkfilename.apk`
@@ -268,17 +270,13 @@ run scanner.provider.traversal -a package_name
 
 Exploiting Service
 
-```
+```bash
 run app.service.info -a package_name
-
 run app.service.start --action action --component package_name component_name
-
 run app.service.send package_name component_name --msg what arg1 arg2 --extra type key value --bundle-as-obj
 ```
 
 #### Inspeckage - Android Package Inspector
-
-
 
 My favorite tool, Inspeckage is a tool developed to offer dynamic analysis of Android applications. By applying hooks to functions of the Android API, Inspeckage will help you understand what an Android application is doing at runtime. Inspeckage will let you interact with some elements of the app, such as activities and providers (even unexported ones), and apply some settings on Android.
 
@@ -289,6 +287,98 @@ Since dynamic analysis of Android applications (usually through hooks) is a core
 * Plenty of time to update the tool after an Android update;
 * Very poor output;
 * Very costly setup.
+
+With Inspeckage, we can get a good amount of information about the application’s behavior:
+
+* Information Gathering
+  * Requested Permissions
+  * App Permissions
+  * Shared Libraries
+  * Exported and Non-exported Activities, Content Providers,Broadcast Receivers and Services
+  * Check if the app is debuggable or not
+  * Version, UID and GIDs
+  * etc.
+
+With the hooks, we can see what the application is doing in real time:
+
+* Shared Preferences (log and file);
+* Serialization;
+* Crypto;
+* Hashes;
+* SQLite;
+* HTTP (an HTTP proxy tool is still the best alternative);
+* File System;
+* Miscellaneous (Clipboard, URL.Parse());
+* WebView;
+* IPC.
+
+### Important
+
+#### Insecure Data Storage
+
+We've totally interacted with our app now it's time to see the files created locally.
+
+Many developers assume that storing data on client-side will restrict other users from having access to this data. Interestingly, most of the top mobile application security breaches have been caused by insecure or unnecessary client-side data storage. File systems on devices are no longer a sandboxed environment and rooting or jailbreaking usually circumvents any protections.
+
+One needs to understand what different types of data are there and how are these stored insecurely.
+
+Data - Usernames, Authentication tokens or passwords, Cookies, Location data, Stored application logs or Debug information, Cached application messages or transaction history, UDID or EMEI, Personal Information (DoB, Address, Social, etc), Device Name, Network Connection Name, private API calls for high user roles, Credit Card Data or Account Data, etc.
+
+All apps (root or not) have a default data directory, which is /data/data/\<package\_name>. By default, the apps databases, settings, and all other data go here.
+
+* **databases**/: here go the app's databases
+* **lib**/: libraries and helpers for the app
+* **files**/: other related files
+* **shared\_prefs**/: preferences and settings
+* **cache**/: well, caches
+
+For interact with device or emulator&#x20;
+
+`adb shell`
+
+Sqlite database file
+
+Once you are able to access the SQLite database file on an emulator, rooted device or via adb shell / run as \[package name], there are a few options to inspect the schema and your SQLite database on device.
+
+[**Inspect SQLite db via a GUI tool**](https://sqlitebrowser.org/dl/)
+
+Pull the file from device first, then use a GUI software to look the schema and content. I use SQLite browser which allows you to see the database schema, table content, as well as executing some simple SQL scripts.
+
+`adb pull /data/data/package-name/databases/sqlitedatabse`
+
+**Inspect SQLite db via sqlite3 command line tool**
+
+For me the easier option is to use sqlite3 command line tool to inspect the database from adb shell.
+
+`cd data/data/package-name/databases/`
+
+`sqlite3 db-name`
+
+`.tables`
+
+`.schema table-name`
+
+#### Shared Preference Files
+
+The SharedPreferences API is commonly used to permanently save small collections of key-value pairs. Data stored in a SharedPreferences object is written to a plain-text XML file. The SharedPreferences object can be declared world-readable (accessible to all apps) or private. Misuse of the SharedPreferences API can often lead to exposure of sensitive data. Consider the following example:
+
+```
+SharedPreferences sharedPref = getSharedPreferences("key", MODE_WORLD_READABLE);
+SharedPreferences.Editor editor = sharedPref.edit();
+editor.putString("username", "administrator");
+editor.putString("password", "supersecret");
+editor.commit();
+```
+
+Once the activity has been called, the file key.xml will be created with the provided data. This code violates several best practices.
+
+```xml
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+  <string name="username">administrator</string>
+  <string name="password">supersecret</string>
+</map>xml
+```
 
 ## Report
 
