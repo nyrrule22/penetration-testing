@@ -198,5 +198,97 @@ It is based on powerful probabilistic graphical models learned from thousands of
 
 ## Dynamic Analysis
 
+#### Installing Applications with ADB
+
+`adb install apkfilename.apk`
+
+#### Intercepting Traffic of the Application
+
+#### Burp Suite
+
+Is an integrated platform for performing security testing of web applications. Its various tools work seamlessly together to support the entire testing process, from initial mapping and analysis of an application’s attack surface, through to finding and exploiting security vulnerabilities.
+
+Installing trusted CA at the Android OS level (Root device/Emulator) for Android N+ as the following:
+
+* `openssl x509 -inform PEM -subject_hash -in BurpCA.pem | head -1`
+* `cat BurpCA.pem > 9a5ba580.0`
+* `openssl x509 -inform PEM -text -in BurpCA.pem -out /dev/null >> 9a5ba580.0`
+* `adb root`
+* `abd remount`
+* `adb push 9a5ba580.0 /system/etc/security/cacerts/`
+* `adb shell "chmod 644 /system/etc/security/cacerts/9a5ba580.0"`
+* `adb shell "reboot"`
+
+#### PID Cat
+
+Tool for shows log entries for a specific application package when debug=true is enable in the app.
+
+#### Drozer
+
+drozer helps to provide confidence that Android apps and devices being developed by, or deployed across, your organisation do not pose an unacceptable level of risk. By allowing you to interact with the Dalvik VM, other apps’ IPC endpoints and the underlying OS.
+
+drozer provides tools to help you use and share public exploits for Android. For remote exploits, it can generate shellcode to help you to deploy the drozer Agent as a remote administrator tool, with maximum leverage on the device.
+
+drozer is a comprehensive security audit and attack framework for Android.
+
+Basic example, Abusing unprotected activities:
+
+* `adb forward tcp:31415 tcp:31415`
+* `drozer console connect`
+* Now download and install [apk](https://github.com/as0ler/Android-Examples/raw/master/sieve.apk) for this example
+
+Retrieving package information:
+
+* `run app.package.list -> see all the packages installed`
+* `run app.package.info -a -> view package information.`
+
+Identifying the attack surface -> activities unprotected and more....
+
+* `run app.package.attacksurface package_name`
+
+View what activities can be exploited.
+
+* `run app.activity.info -f package_name`
+
+Start activities unprotected!
+
+* `run app.activity.start --component package name component_name`
+
+Exploiting Content Provider
+
+```bash
+run app.provider.info -a package_name
+run scanner.provider.finduris -a package_name
+run app.provider.query uri
+run app.provider.update uri --selection conditions selection_arg column data
+run scanner.provider.sqltables -a package_name
+run scanner.provider.injection -a package_name
+run scanner.provider.traversal -a package_name
+```
+
+Exploiting Service
+
+```
+run app.service.info -a package_name
+
+run app.service.start --action action --component package_name component_name
+
+run app.service.send package_name component_name --msg what arg1 arg2 --extra type key value --bundle-as-obj
+```
+
+#### Inspeckage - Android Package Inspector
+
+
+
+My favorite tool, Inspeckage is a tool developed to offer dynamic analysis of Android applications. By applying hooks to functions of the Android API, Inspeckage will help you understand what an Android application is doing at runtime. Inspeckage will let you interact with some elements of the app, such as activities and providers (even unexported ones), and apply some settings on Android.
+
+Since dynamic analysis of Android applications (usually through hooks) is a core part of several mobile application security tests, the need of a tool that can help us do said tests is real. Even though there are other tools that promise to help you do that, I’ve run across some limitations when testing them:
+
+* Lack of interaction with the user doing the tests;
+* Only work in emulators;
+* Plenty of time to update the tool after an Android update;
+* Very poor output;
+* Very costly setup.
+
 ## Report
 
