@@ -169,7 +169,7 @@ Is a Mobile Application Reverse engineering and Analysis Framework. It is a tool
 
 Is a static code analysis tool, designed to recognize potential security vulnerabilities and points of concern for Java-based Android applications.
 
-#### MobSF: [https://github.com/MobSF/Mobile-Security-Framework-MobSF/wiki/1.-documentation](https://github.com/MobSF/Mobile-Security-Framework-MobSF/wiki/1.-documentation)
+#### MobSF: [https://mobsf.github.io/docs/#/](https://mobsf.github.io/docs/#/)
 
 Is an automated, all-in-one mobile application (Android/iOS/Windows) pen-testing, malware analysis and security assessment framework capable of performing static and dynamic analysis.
 
