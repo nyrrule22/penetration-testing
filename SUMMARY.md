@@ -20,6 +20,7 @@
 ## Vulnerabilities
 
 * [CVEs](vulnerabilities/cves.md)
+* [SQLi (SQL Injection)](vulnerabilities/sqli-sql-injection.md)
 * [XXE (XML External Entity)](vulnerabilities/xxe-xml-external-entity.md)
 
 ## Privilege Escalation
