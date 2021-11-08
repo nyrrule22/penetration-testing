@@ -73,3 +73,41 @@ cat  # Concatenate files and print on the standard out
 ```
 
 ## Scripts
+
+### Ping Sweeper
+
+#### Ping
+
+```bash
+# Ping example
+ping 192.168.4.29
+PING 192.168.4.29 (192.168.4.29) 56(84) bytes of data.
+64 bytes from 192.168.4.29: icmp_seq1 ttl=128 time=0.403 ms
+# Send Ping command/reply to a file
+ping 192.168.4.29 > ip.txt
+# Grab just the IP address from the file
+cat ip.txt | grep "64 bytes" | cut -d " " -f 4 | tr -d ":"
+```
+
+#### Script to ping the IP addresses specified for the last octet and grabbing only the IPs
+
+```bash
+#!/bin/bash
+
+if [ "$1" == "" ]
+then
+echo "You forgot an IP address!"
+echo "Syntax: ./ipsweep.sh 192.168.4"
+
+else
+for ip in `seq 1 254`; do
+ping -c 1 $1.$ip | grep "64 bytes" | cut -d " " -f 4 | tr -d ":" &
+done
+fi
+```
+
+#### One Liner executing nmap against IP addresses found
+
+```bash
+for ip in $(cat ip.txt); do nmap $ip; done
+```
