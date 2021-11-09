@@ -92,13 +92,41 @@ print(type(bool1))  # <class 'bool'>
 ### Relational and Boolean Operators
 
 ```python
-// Some codep
+greater_than = 7 > 6  # Will be True
+less_than 5 < 7  # Will be True
+greater_than_equal_to = 7>= 7  # Will be True
+less_than_equal_to = 7 <= 7  # Will be True
+test_and = (7 > 5) and (5 < 7)  # Will be True
+test_and2 = (7 > 5) and (5 > 7)  # Will be False
+test_or = (7 > 5) or (5 > 7)  # Will be True
+test_not = not True  # Will be True
 ```
 
 ### Conditional Statements
 
 ```python
-// Some code
+# Example 1
+def drink(money):
+    if money >= 2:
+        return "You can purchase the drink"
+    else:
+        return "No drink for you!"
+print(drink(3))  # Will return first condition
+print(drink(1))  # Will return second condition
+# Example 2
+def alcohol(age, money):
+    if (age >= 21 and (money >= 5):
+        return "We are getting a drink!"
+    elif (age >=21) and (money < 5):
+        return "Come back with more money."
+    elif (age < 21) and (oney >= 5):
+        return "Nice try, kid."
+    else:
+        return "You are too poor and too young."
+print(alcohol(21,5))  # Will return first condition
+print(alcohol(21,4))  # Will return second condition
+print(alcohol(19,5))  # Will return third condition
+print(alcohol(19,4))  # Will return fourth condition
 ```
 
 ### Lists
