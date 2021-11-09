@@ -157,31 +157,75 @@ print(grades[1])  # Will print out "b"
 ### Looping
 
 ```python
-// Some code
+# For Loops
+veggies = ["cucumber", "spinach", "cabbage"]
+for v in veggies:
+   print(v)
+# While Loops
+i = 1
+while i < 10:
+    print(i)
+    i += 1
 ```
 
 ### Importing Modules
 
 ```python
-// Some code
+import sys  # Import module
+from datetime import datetime  # Import part of a module
+import datetime as dt  # Import module and giving it an alias
+print(sys.version)
+print(datetime.now())
+print(dt.now())
 ```
 
 ### Advanced Strings
 
 ```python
-// Some code
+my_name = "Erich"
+print(my_name[0])  # Print first letter of my_name
+sentence = "This is a sentence."
+print(sentence[:4])  # Print first 4 letters
+print(sentence.split())  # Print out each word/index based on delimter (space)
+print(sentence_split = sentence.split()
+print(sentence_join = ' '.join(sentence_split))
+quote = "He said, 'give me all your money'"  # Using quotes in a string
+quote2 = "He said, \"give me all your money\""  # Escaping same quotes
+too_much_space = "        hello        "
+print(too_much_space.strip())  # Print string removing extra space
+print("A" in "Apple")  # Will return True
+print("A" in "apple")  # Will return False
+letter = "A"
+word = "Apple"
+print(letter.lower() in word.lower())
+movie = "The Hangover"
+print(f"My favorite movie is {movie}.")
 ```
 
 ### Dictionaries
 
 ```python
-// Some code
+# Key/Value pairs and uses curly braces
+drinks = {"White Russian": 7, "Old Fashioned": 10, "Lemon Drop": 8}
+drinks["White Russian"] = 8  # Update existing key value in drinks
+drinks.get("White Russian")  # Get the value of a specified key
+employees = {"Finance": ["bob", "Linda", "Tina"], "IT": ["Gene", "Louise", "Teddy"], "HR": ["Jimmy Jr.", "Mort"]}
+employees["Legal"] = ["Mr. Frond"]  # Add new key/value pair to employees
+employees.update({"Sales": ["Andie", "Ollie"]})  # Add new key/value pairs to employees
 ```
 
 ### Sockets
 
 ```python
-// Some code
+# Mini 5 line script using sockets
+import socket
+HOST = '127.0.0.1'
+PORT = 7777
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((HOST, PORT))
+# Listen on 7777 using netcat
+nc -lvnp 7777
+# Execute the socket 5 lines script to connect to netcat
 ```
 
 ## Scripts
@@ -189,5 +233,36 @@ print(grades[1])  # Will print out "b"
 ### Port Scanner
 
 ```python
-// Some codepy
+#!/bin/python
+import sys
+import socket
+from datetime import datetime
+# Define our target
+if len(sys.argv) == 2:
+    target = socket.gethostbyname(sys.argv[1])  # Translate hostname to IPv4
+else:
+    print("Invalid amount of arguments.")
+    print("Syntax: python3 scanner.py <ip>"
+# Add pretty banner
+print("-" * 50)
+print("Scanning target " + target)
+print("Time started: " + str(datetime.now()))
+print("-" * 50)
+try:
+    for port in range(21,88):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        socket.setdefaulttimeout(1)
+        result = s.connect_ex((target,port))  # Returns an error indicator
+        if result == 0:
+            print(f"Port {port} is open.")
+        s.close()
+except KeyboardInterrupt:
+    print("\nExiting program.")
+    sys.exit()
+except socket.gaierror:
+    print("Hostname could not be resolved.")
+    sys.exit()
+except socket.error:
+    print("Could not connect to server.")
+    sys.exit()
 ```
