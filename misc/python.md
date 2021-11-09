@@ -132,13 +132,26 @@ print(alcohol(19,4))  # Will return fourth condition
 ### Lists
 
 ```python
-// Some code
+# Mutible and uses square brackets
+movies = ["When Harry Met Sally", "Than Hangover", "The Perks of Being a Wallflower", "The Exorcist"]
+print(movies[1])  # Will return "The Hangover"
+print(movies[1])  # will return "When Harry Met Sally"
+print(movies[1:3])  # Will return "Than Hangover" and "The Perks of Being a Wallflower"
+print(movies[1:])  # Get the item in index 1 and the rest of the list
+print(movies[:1])  # Get the items before the item in index 1
+print(movies[-1])  # Get the last item in the list
+print(len(movies))  # Print the length (item count) of the list
+print(movies.append("Jaws"))  # Append and item to the list
+print(movies.pop())  # Removes the last item of the list
+print(movies.pop[0])  # Remove the first (a specified ) item from the list
 ```
 
 ### Tuples
 
 ```python
-// Some code
+# Immutable and uses paretheses
+grades = ("a", "b", "c", "d", "f")
+print(grades[1])  # Will print out "b"
 ```
 
 ### Looping
