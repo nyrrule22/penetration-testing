@@ -187,7 +187,102 @@ To carry out an SQL injection UNION attack, you need to ensure that your attack 
 
 ### Determining the number of columns required in an SQL injection UNION attack
 
+When performing an SQL injection UNION attack, there are two effective methods to determine how many columns are being returned from the original query.
+
+The first method involves injecting a series of `ORDER BY` clauses and incrementing the specified column index until an error occurs. For example, assuming the injection point is a quoted string within the `WHERE` clause of the original query, you would submit:
+
+`' ORDER BY 1--`\
+`' ORDER BY 2--`\
+`' ORDER BY 3--`\
+`etc.`
+
+This series of payloads modifies the original query to order the results by different columns in the result set. The column in an `ORDER BY` clause can be specified by its index, so you don't need to know the names of any columns. When the specified column index exceeds the number of actual columns in the result set, the database returns an error, such as:
+
+`The ORDER BY position number 3 is out of range of the number of items in the select list.`
+
+The application might actually return the database error in its HTTP response, or it might return a generic error, or simply return no results. Provided you can detect some difference in the application's response, you can infer how many columns are being returned from the query.
+
+The second method involves submitting a series of `UNION SELECT` payloads specifying a different number of null values:
+
+`' UNION SELECT NULL--`\
+`' UNION SELECT NULL,NULL--`\
+`' UNION SELECT NULL,NULL,NULL--`\
+`etc.`
+
+If the number of nulls does not match the number of columns, the database returns an error, such as:
+
+`All queries combined using a UNION, INTERSECT or EXCEPT operator must have an equal number of expressions in their target lists.`
+
+Again, the application might actually return this error message, or might just return a generic error or no results. When the number of nulls matches the number of columns, the database returns an additional row in the result set, containing null values in each column. The effect on the resulting HTTP response depends on the application's code. If you are lucky, you will see some additional content within the response, such as an extra row on an HTML table. Otherwise, the null values might trigger a different error, such as a `NullPointerException`. Worst case, the response might be indistinguishable from that which is caused by an incorrect number of nulls, making this method of determining the column count ineffective.
+
+### Finding columns with a useful data type in an SQL injection UNION attack
+
+The reason for performing an SQL injection UNION attack is to be able to retrieve the results from an injected query. Generally, the interesting data that you want to retrieve will be in string form, so you need to find one or more columns in the original query results whose data type is, or is compatible with, string data.
+
+Having already determined the number of required columns, you can probe each column to test whether it can hold string data by submitting a series of `UNION SELECT` payloads that place a string value into each column in turn. For example, if the query returns four columns, you would submit:
+
+`' UNION SELECT 'a',NULL,NULL,NULL--`\
+`' UNION SELECT NULL,'a',NULL,NULL--`\
+`' UNION SELECT NULL,NULL,'a',NULL--`\
+`' UNION SELECT NULL,NULL,NULL,'a'--`
+
+If the data type of a column is not compatible with string data, the injected query will cause a database error, such as:
+
+`Conversion failed when converting the varchar value 'a' to data type int.`
+
+If an error does not occur, and the application's response contains some additional content including the injected string value, then the relevant column is suitable for retrieving string data.
+
+### Using an SQL injection UNION attack to retrieve interesting data
+
+When you have determined the number of columns returned by the original query and found which columns can hold string data, you are in a position to retrieve interesting data.
+
+Suppose that:
+
+* The original query returns two columns, both of which can hold string data.
+* The injection point is a quoted string within the `WHERE` clause.
+* The database contains a table called `users` with the columns `username` and `password`.
+
+In this situation, you can retrieve the contents of the `users` table by submitting the input:
+
+`' UNION SELECT username, password FROM users--`
+
+Of course, the crucial information needed to perform this attack is that there is a table called `users` with two columns called `username` and `password`. Without this information, you would be left trying to guess the names of tables and columns. In fact, all modern databases provide ways of examining the database structure, to determine what tables and columns it contains.
+
+### Retrieving multiple values within a single column <a href="retrieving-multiple-values-within-a-single-column" id="retrieving-multiple-values-within-a-single-column"></a>
+
+In the preceding example, suppose instead that the query only returns a single column.
+
+You can easily retrieve multiple values together within this single column by concatenating the values together, ideally including a suitable separator to let you distinguish the combined values. For example, on Oracle you could submit the input:
+
+`' UNION SELECT username || '~' || password FROM users--`
+
+This uses the double-pipe sequence `||` which is a string concatenation operator on Oracle. The injected query concatenates together the values of the `username` and `password` fields, separated by the `~` character.
+
+The results from the query will let you read all of the usernames and passwords, for example:
+
+`...`\
+`administrator~s3cure`\
+`wiener~peter`\
+`carlos~montoya`\
+`...`
+
 ## Examining the database in SQL injection attacks
+
+When exploiting [SQL injection](https://portswigger.net/web-security/sql-injection) vulnerabilities, it is often necessary to gather some information about the database itself. This includes the type and version of the database software, and the contents of the database in terms of which tables and columns it contains.
+
+### Querying the database type and version
+
+Different databases provide different ways of querying their version. You often need to try out different queries to find one that works, allowing you to determine both the type and version of the database software.
+
+The queries to determine the database version for some popular database types are as follows:
+
+| Database type    | Query                     |
+| ---------------- | ------------------------- |
+| Microsoft, MySQL | `SELECT @@version`        |
+| Oracle           | `SELECT * FROM v$version` |
+| PostgreSQL       | `SELECT version()`        |
+
+
 
 ## Blind SQL injection
 
@@ -222,6 +317,38 @@ When navigating to the webpage and selecting My Account we get as simple login f
 In the Username field we can place in `administrator'--` and in the Password field we can put junk text and we successfully log in as the administrator user.
 
 ### UNION Attack
+
+#### SQL injection UNION attack, determining the number of columns returned by the query
+
+> This lab contains an SQL injection vulnerability in the product category filter. The results from the query are returned in the application's response, so you can use a UNION attack to retrieve data from other tables. The first step of such an attack is to determine the number of columns that are being returned by the query.
+
+On the `category=` parameter I added an apostrophe to check for SQLi and got an Internal Server Error which told me it was probably vulnerable. I then attempted to check to see if I can determine how many columns there were by appending `'UNION SELECT NULL,NULL,NULL--` to the parameter.&#x20;
+
+#### SQL injection UNION attack, finding a column containing text
+
+> The lab will provide a random value that you need to make appear within the query results. To solve the lab, perform an SQL injection UNION attack that returns an additional row containing the value provided. This technique helps you determine which columns are compatible with string data.
+
+Knowing from the previous lab that there are 3 columns I passed in a string to each value and saw that in the second column it was successful: `' UNION SELECT NULL,'a',NULL--`
+
+#### SQL injection UNION attack, retrieving data from other tables
+
+> The database contains a different table called users, with columns called username and password.
+>
+> To solve the lab, perform an SQL injection UNION attack that retrieves all usernames and passwords, and use the information to log in as the administrator user.
+
+Using the following payload I was able to extract the users and their passwords
+
+`' UNION SELECT username, password FROM users--`
+
+#### SQL injection UNION attack, retrieving multiple values in a single column
+
+> The database contains a different table called users, with columns called username and password.
+>
+> To solve the lab, perform an SQL injection UNION attack that retrieves all usernames and passwords, and use the information to log in as the administrator user.
+
+This table was found to have only two columns: `'+UNION+SELECT+NULL,'a'--`
+
+We can replace the string portion with our user account query: `'+UNION+SELECT+NULL,username || '~' || password FROM users--`
 
 ### Querying the Database
 
