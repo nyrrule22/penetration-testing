@@ -40,4 +40,4 @@
 
 ## Wireless
 
-* [Page 1](wireless/page-1.md)
+* [WiFi Hacking 101](wireless/page-1.md)
