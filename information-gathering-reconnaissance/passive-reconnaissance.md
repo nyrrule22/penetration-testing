@@ -62,12 +62,53 @@ Payed service at dehashed.com.
 
 ## Hunting Subdomains
 
-## Identify Website Technologies
+### Tools
+
+* Sublist3r
+  * `sublist3r -d tesla.com`
+* crt.sh (Website)
+* OWASP Amass
+* httprobe
+
+## Identifying Website Technologies
+
+### Tools
+
+* builtwith.com
+* Wappalyzer
+* whatweb
+  * `whatweb https://tesla.com`
 
 ## Information Gathering with Burp Suite
 
+Intercept website traffic. View/modify requests. View Target details.
+
 ## Google Fu
 
+### Examples
+
+* `site:tesla.com -www`
+* `site:tesla.com filetype:pdf`
+
+### Resources
+
+{% embed url="https://ahrefs.com/blog/google-advanced-search-operators" %}
+
+{% embed url="https://moz.com/learn/seo/search-operators" %}
+
 ## Utilizing Social Media
+
+### Websites
+
+* LinkedIn
+* Twitter
+* Facebook
+
+### Look For
+
+* Pictures
+* Badge photos
+* Desk pictures
+* People and their information
 
 ## OSINT Fundamentals
