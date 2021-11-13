@@ -61,3 +61,5 @@
 * [Networking](misc/networking.md)
 * [Linux](misc/linux.md)
 * [Python](misc/python.md)
+* [Tools](misc/tools/README.md)
+  * [ffuf](misc/tools/ffuf.md)
