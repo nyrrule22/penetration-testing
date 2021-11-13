@@ -63,3 +63,6 @@
 * [Python](misc/python.md)
 * [Tools](misc/tools/README.md)
   * [ffuf](misc/tools/ffuf.md)
+  * [gobuster](misc/tools/gobuster.md)
+  * [hydra](misc/tools/hydra.md)
+  * [wpscan](misc/tools/wpscan.md)
