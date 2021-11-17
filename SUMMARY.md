@@ -25,6 +25,7 @@
 ## Vulnerabilities
 
 * [CVEs](vulnerabilities/cves.md)
+* [Command Injection](vulnerabilities/command-injection.md)
 * [Directory Traversal](vulnerabilities/directory-traversal.md)
 * [SQLi (SQL Injection)](vulnerabilities/sqli-sql-injection.md)
 * [XXE (XML External Entity)](vulnerabilities/xxe-xml-external-entity.md)
