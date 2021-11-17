@@ -5,6 +5,10 @@
 ## Penetration Testing Methodology
 
 * [5 Stages of Ethical Hacking](penetration-testing-methodology/5-stages-of-ethical-hacking.md)
+* [Advanced Kali](penetration-testing-methodology/advanced-kali.md)
+* [Shells](penetration-testing-methodology/shells/README.md)
+  * [Linux Shells](penetration-testing-methodology/shells/linux-shells.md)
+  * [Windows Shells](penetration-testing-methodology/shells/windows-shells.md)
 
 ## Information Gathering (Reconnaissance)
 
@@ -13,22 +17,27 @@
 ## Scanning & Enumeration
 
 * [Page 2](scanning-and-enumeration/page-2.md)
+* [Advanced Enumeration](scanning-and-enumeration/advanced-enumeration.md)
+* [Nessus](scanning-and-enumeration/nessus.md)
 
-## Ports
+## Pentesting Network
 
-* [21 - FTP](ports/21-ftp.md)
+* [21 - FTP](pentesting-network/21-ftp.md)
+* [22 - SSH](pentesting-network/22-ssh.md)
+* [80/443 - HTTP/S](pentesting-network/80-443-http-s.md)
+* [139/445 - SMB](pentesting-network/139-445-smb.md)
+
+## Pentesting Web
+
+* [CVEs](pentesting-web/cves.md)
+* [Command Injection](pentesting-web/command-injection.md)
+* [Directory Traversal](pentesting-web/directory-traversal.md)
+* [SQLi (SQL Injection)](pentesting-web/sqli-sql-injection.md)
+* [XXE (XML External Entity)](pentesting-web/xxe-xml-external-entity.md)
 
 ## Exploitation
 
 * [Page 3](exploitation/page-3.md)
-
-## Vulnerabilities
-
-* [CVEs](vulnerabilities/cves.md)
-* [Command Injection](vulnerabilities/command-injection.md)
-* [Directory Traversal](vulnerabilities/directory-traversal.md)
-* [SQLi (SQL Injection)](vulnerabilities/sqli-sql-injection.md)
-* [XXE (XML External Entity)](vulnerabilities/xxe-xml-external-entity.md)
 
 ## Privilege Escalation
 
