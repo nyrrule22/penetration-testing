@@ -9,6 +9,7 @@
 * [Shells](penetration-testing-methodology/shells/README.md)
   * [Linux Shells](penetration-testing-methodology/shells/linux-shells.md)
   * [Windows Shells](penetration-testing-methodology/shells/windows-shells.md)
+  * [MSFvenom](penetration-testing-methodology/shells/msfvenom.md)
 
 ## Information Gathering (Reconnaissance)
 
