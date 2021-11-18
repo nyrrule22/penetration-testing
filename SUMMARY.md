@@ -27,7 +27,15 @@
 
 * [21 - FTP](pentesting-network/21-ftp.md)
 * [22 - SSH](pentesting-network/22-ssh.md)
-* [80/443 - HTTP/S](pentesting-network/80-443-http-s.md)
+* [80/443 - HTTP/S](pentesting-network/80-443-http-s/README.md)
+  * [Drupal](pentesting-network/80-443-http-s/drupal.md)
+  * [Flask](pentesting-network/80-443-http-s/flask.md)
+  * [Git](pentesting-network/80-443-http-s/git.md)
+  * [Jenkins](pentesting-network/80-443-http-s/jenkins.md)
+  * [Joomla](pentesting-network/80-443-http-s/joomla.md)
+  * [Tomcat](pentesting-network/80-443-http-s/tomcat.md)
+  * [WebDAV](pentesting-network/80-443-http-s/webdav.md)
+  * [WordPress](pentesting-network/80-443-http-s/wordpress.md)
 * [139/445 - SMB](pentesting-network/139-445-smb.md)
 
 ## Pentesting Web
