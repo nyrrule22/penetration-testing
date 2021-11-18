@@ -17,9 +17,11 @@
 
 ## Scanning & Enumeration
 
-* [Page 2](scanning-and-enumeration/page-2.md)
-* [Advanced Enumeration](scanning-and-enumeration/advanced-enumeration.md)
+* [Netdiscover](scanning-and-enumeration/netdiscover.md)
+* [Arp-scan](scanning-and-enumeration/arp-scan.md)
+* [Nmap](scanning-and-enumeration/nmap.md)
 * [Nessus](scanning-and-enumeration/nessus.md)
+* [Enumeration](scanning-and-enumeration/enumeration.md)
 
 ## Pentesting Network
 
