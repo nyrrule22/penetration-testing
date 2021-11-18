@@ -27,6 +27,7 @@
 
 * [21 - FTP](pentesting-network/21-ftp.md)
 * [22 - SSH](pentesting-network/22-ssh.md)
+* [53 - DNS](pentesting-network/53-dns.md)
 * [80/443 - HTTP/S](pentesting-network/80-443-http-s/README.md)
   * [Drupal](pentesting-network/80-443-http-s/drupal.md)
   * [Flask](pentesting-network/80-443-http-s/flask.md)
