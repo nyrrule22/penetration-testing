@@ -37,6 +37,9 @@
   * [WebDAV](pentesting-network/80-443-http-s/webdav.md)
   * [WordPress](pentesting-network/80-443-http-s/wordpress.md)
 * [139/445 - SMB](pentesting-network/139-445-smb.md)
+* [2049 - NFS](pentesting-network/2049-nfs.md)
+* [3632 - distcc](pentesting-network/3632-distcc.md)
+* [6667 - IRC](pentesting-network/6667-irc.md)
 
 ## Pentesting Web
 
