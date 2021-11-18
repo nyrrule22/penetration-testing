@@ -20,8 +20,6 @@ Easy, play store: is a digital distribution platform for mobile apps for devices
 
 ## Reversing
 
-####
-
 ### View Devices
 
 #### ADB
@@ -117,7 +115,7 @@ This is considered a security issue because people could backup your app via ADB
 4. files in directories created with getDir(Sring, int).
 5. files on external storage returned by getExternalFilesDir (String type).
 
-How to identify this?&#x20;
+How to identify this?
 
 Open the AndroidManifest.xml or use cat & grep: android:allowBackup="true"
 
@@ -332,7 +330,7 @@ All apps (root or not) have a default data directory, which is /data/data/\<pack
 * **shared\_prefs**/: preferences and settings
 * **cache**/: well, caches
 
-For interact with device or emulator&#x20;
+For interact with device or emulator
 
 `adb shell`
 
@@ -523,7 +521,7 @@ frida-ps -U
 
 ## References
 
-[Owasp Mobile Top 10 ](https://www.owasp.org/index.php/Mobile\_Top\_10\_2016-Top\_10)
+[Owasp Mobile Top 10](https://www.owasp.org/index.php/Mobile\_Top\_10\_2016-Top\_10)
 
 [Mobile Security Testing Guide (MSTG)](https://www.owasp.org/index.php/OWASP\_Mobile\_Security\_Testing\_Guide)
 
