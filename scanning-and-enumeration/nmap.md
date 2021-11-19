@@ -5,6 +5,8 @@
 ```bash
 nmap <IP>  # Basic scan of the top 1000 ports
 nmap -p- <IP>  # Basic scan of all 65535 ports
+nmap -iL <FILENAME>  # Input from list of hosts/networks
+nmap <IP> -v  # Increase verbosity level (use -vv or more for greater effect)
 ```
 
 ## Host Discovery
