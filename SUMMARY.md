@@ -5,7 +5,6 @@
 ## Penetration Testing Methodology
 
 * [5 Stages of Ethical Hacking](penetration-testing-methodology/5-stages-of-ethical-hacking.md)
-* [Passwords](penetration-testing-methodology/passwords.md)
 
 ## Information Gathering (Reconnaissance)
 
@@ -58,6 +57,7 @@
 
 ## Post Exploitation
 
+* [Passwords](post-exploitation/passwords.md)
 * [Post Exploitation Basics](post-exploitation/post-exploitation-basics.md)
 
 ## Privilege Escalation
