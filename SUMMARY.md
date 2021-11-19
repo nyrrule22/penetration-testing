@@ -5,10 +5,6 @@
 ## Penetration Testing Methodology
 
 * [5 Stages of Ethical Hacking](penetration-testing-methodology/5-stages-of-ethical-hacking.md)
-* [Shells](penetration-testing-methodology/shells/README.md)
-  * [Linux Shells](penetration-testing-methodology/shells/linux-shells.md)
-  * [Windows Shells](penetration-testing-methodology/shells/windows-shells.md)
-  * [MSFvenom](penetration-testing-methodology/shells/msfvenom.md)
 * [Passwords](penetration-testing-methodology/passwords.md)
 
 ## Information Gathering (Reconnaissance)
@@ -54,6 +50,15 @@
 ## Exploitation
 
 * [Metasploitable](exploitation/metasploitable.md)
+* [Exploitation Basics](exploitation/exploitation-basics.md)
+* [Shells](exploitation/shells/README.md)
+  * [Linux Shells](exploitation/shells/linux-shells.md)
+  * [Windows Shells](exploitation/shells/windows-shells.md)
+  * [MSFvenom](exploitation/shells/msfvenom.md)
+
+## Post Exploitation
+
+* [Post Exploitation](post-exploitation/post-exploitation.md)
 
 ## Privilege Escalation
 
