@@ -58,7 +58,7 @@
 
 ## Post Exploitation
 
-* [Post Exploitation](post-exploitation/post-exploitation.md)
+* [Post Exploitation Basics](post-exploitation/post-exploitation-basics.md)
 
 ## Privilege Escalation
 
