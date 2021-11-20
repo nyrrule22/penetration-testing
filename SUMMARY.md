@@ -95,6 +95,7 @@
 * [Networking](misc/networking.md)
 * [Linux](misc/linux.md)
 * [Python](misc/python.md)
+* [Git](misc/git.md)
 * [Tools](misc/tools/README.md)
   * [ffuf](misc/tools/ffuf.md)
   * [gobuster](misc/tools/gobuster.md)
