@@ -97,6 +97,7 @@
 * [Note Taking](misc/note-taking.md)
 * [Networking](misc/networking.md)
 * [Linux](misc/linux.md)
+* [PowerShell](misc/powershell.md)
 * [Python](misc/python.md)
 * [Git](misc/git.md)
 * [Tools](misc/tools/README.md)
