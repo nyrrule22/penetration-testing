@@ -5,6 +5,7 @@
 ## Penetration Testing Methodology
 
 * [5 Stages of Ethical Hacking](penetration-testing-methodology/5-stages-of-ethical-hacking.md)
+* [The Cyber Kill Chain](penetration-testing-methodology/the-cyber-kill-chain.md)
 
 ## Information Gathering (Reconnaissance)
 
@@ -102,4 +103,5 @@
   * [ffuf](misc/tools/ffuf.md)
   * [gobuster](misc/tools/gobuster.md)
   * [hydra](misc/tools/hydra.md)
+  * [netcat](misc/tools/netcat.md)
   * [wpscan](misc/tools/wpscan.md)
