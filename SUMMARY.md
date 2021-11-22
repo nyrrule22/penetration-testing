@@ -16,6 +16,7 @@
 * [Arp-scan](scanning-and-enumeration/arp-scan.md)
 * [Nmap](scanning-and-enumeration/nmap.md)
 * [Nessus](scanning-and-enumeration/nessus.md)
+* [OpenVAS](scanning-and-enumeration/openvas.md)
 * [Enumeration](scanning-and-enumeration/enumeration.md)
 
 ## Pentesting Network
@@ -48,8 +49,8 @@
 
 ## Exploitation
 
-* [Metasploitable](exploitation/metasploitable.md)
 * [Exploitation Basics](exploitation/exploitation-basics.md)
+* [Metasploit](exploitation/metasploit.md)
 * [Shells](exploitation/shells/README.md)
   * [Linux Shells](exploitation/shells/linux-shells.md)
   * [Windows Shells](exploitation/shells/windows-shells.md)
@@ -57,7 +58,8 @@
 
 ## Post Exploitation
 
-* [Passwords](post-exploitation/passwords.md)
+* [Passwords](post-exploitation/passwords/README.md)
+  * [Password Cracking](post-exploitation/passwords/password-cracking.md)
 * [Post Exploitation Basics](post-exploitation/post-exploitation-basics.md)
 
 ## Privilege Escalation
