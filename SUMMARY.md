@@ -104,4 +104,5 @@
   * [gobuster](misc/tools/gobuster.md)
   * [hydra](misc/tools/hydra.md)
   * [netcat](misc/tools/netcat.md)
+  * [tcpdump](misc/tools/tcpdump.md)
   * [wpscan](misc/tools/wpscan.md)
