@@ -42,6 +42,7 @@
 
 ## Pentesting Web
 
+* [Web Testing](pentesting-web/web-testing.md)
 * [CVEs](pentesting-web/cves.md)
 * [Command Injection](pentesting-web/command-injection.md)
 * [Directory Traversal](pentesting-web/directory-traversal.md)
