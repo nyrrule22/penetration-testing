@@ -72,6 +72,149 @@ gedit  # UI file editor
 cat  # Concatenate files and print on the standard out
 ```
 
+## Bash Scripting
+
+Print out a variable called `str` which contains the string "Hello World!"
+
+```bash
+#!/bin/bash
+str="Hello World!"
+echo $str
+
+./hello.sh
+```
+
+Print out the number of arguments (`$#`) and then the argument values.
+
+```bash
+#!/bin/bash
+echo $#
+echo $1 $2
+
+./argtest.sh Hello World
+```
+
+Have a user specify an argument number and have it compared against a static argument.
+
+```bash
+#!/bin/bash
+num1="$1"
+num2=17
+if [ $num1 -ge $num2 ]
+then
+  echo "$num1 is greater than or equal to $num2"
+else
+  echo "$num1 is less than $num2"
+fi
+echo "Sum is" $(($num1+$num2))
+
+./vartest.sh 19
+```
+
+Read input on a newline then reading input again on the same line (`-p`)
+
+```bash
+#!/bin/bash
+echo "What is your name?"
+read name
+echo "Hello $name"
+echo
+read -p "Remind me, what is your name again? " name
+echo "Hello again $name"
+
+./readtest.sh
+```
+
+For loop iterating through an array.
+
+```bash
+#!/bin/bash
+names=('Peter' 'Paul' 'Mary' 'David' 'Joe')
+x=${#names[@]}
+for ((i=0; i<$x; i++))
+do
+  echo ${names[${i}]}
+done
+
+./fortest.sh
+```
+
+While loop and then an until loop
+
+```bash
+#!/bin/bash
+runs=6
+while [ $runs -gt 0 ]
+do 
+  echo "Run down at number $runs"
+  let runs=runs-1
+done
+until [ $runs -gt 6 ]
+do
+  echo "Run up at number $runs"
+  let runs=runs+1
+done
+
+./wutest.sh
+```
+
+If else loop checking if a directory exists, and if it does, list its contents.
+
+```bash
+#!/bin/bash
+if [ -d $1 ]
+then
+  echo "$1 exists"
+  ls $1
+else
+  echo "$1 does not exist."
+fi
+
+./iftest.sh
+```
+
+Using a function, select statement, and case statement to print out a city chosen.
+
+```bash
+#!/bin/bash
+function speak
+{ if [ $1 = "Paris" ]
+  then
+    echo "Language used is French"
+  elif [ $1 = "Hanoi" ]
+  then
+    echo "Language used is Vietnamese, with a little French"
+  else
+    echo "Language used is English, of one form or another!"
+  fi
+}
+PS3=">"
+echo "Let's check the language"
+select city in "Paris" "Melbourne" "Toronto" "Seattle" "Hanoi" "exit"
+do
+  if [ $city = "exit" ]
+  then
+    break
+  fi
+  case $city in
+    Paris)
+      echo "City is Paris, France";;
+    Melbourne)
+      echo "City is Melbourne, Autstralia";;
+    Toronto)
+      echo "City is Toronto, Canada";;
+    Seattle)
+      echo "City is Seattle, USA";;
+    Hanoi)
+      echo "City is Hanoi, Vietnam";;
+  esac
+  speak $city
+done
+echo "Bye!"
+
+./fntest.sh
+```
+
 ## Scripts
 
 ### Ping Sweeper
