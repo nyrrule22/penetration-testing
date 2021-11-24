@@ -46,7 +46,8 @@
 * [CVEs](pentesting-web/cves.md)
 * [Command Injection](pentesting-web/command-injection.md)
 * [Directory Traversal](pentesting-web/directory-traversal.md)
-* [SQLi (SQL Injection)](pentesting-web/sqli-sql-injection.md)
+* [SQLi (SQL Injection)](pentesting-web/sqli-sql-injection/README.md)
+  * [Checklists](pentesting-web/sqli-sql-injection/checklists.md)
 * [XXE (XML External Entity)](pentesting-web/xxe-xml-external-entity.md)
 
 ## Exploitation
