@@ -62,6 +62,7 @@
 ## Post Exploitation
 
 * [Passwords](post-exploitation/passwords/README.md)
+  * [File Password Cracking](post-exploitation/passwords/file-password-cracking.md)
   * [Password Cracking](post-exploitation/passwords/password-cracking.md)
 * [Post Exploitation Basics](post-exploitation/post-exploitation-basics.md)
 
@@ -103,9 +104,11 @@
 * [Python](misc/python.md)
 * [Git](misc/git.md)
 * [Tools](misc/tools/README.md)
+  * [assetfinder](misc/tools/assetfinder.md)
   * [ffuf](misc/tools/ffuf.md)
   * [gobuster](misc/tools/gobuster.md)
   * [hydra](misc/tools/hydra.md)
+  * [masscan](misc/tools/masscan.md)
   * [netcat](misc/tools/netcat.md)
   * [tcpdump](misc/tools/tcpdump.md)
   * [wpscan](misc/tools/wpscan.md)
