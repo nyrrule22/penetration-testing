@@ -118,6 +118,29 @@ Switching Branch to dotfiles we find a SSH Private Key and the file it is in is 
 
 ### harder
 
+* After finding the subdomain pwd.harder.local and then navigating to it in a browser, the DotGit extension automatically identified .git extension.
+* Downloaded all the files found in the .git folder
+* Unzipped files and navigated into the directory containing the .git folder
+* Viewed the git logs
+  * `git log`
+  * `git log --pretty=oneline`
+
+Viewed the specific commits in the logs
+
+```bash
+kali@kali:~/ctf/thm/harder/pwd_harder_local$ git log --pretty=oneline
+9399abe877c92db19e7fc122d2879b470d7d6a58 (HEAD -> master) add gitignore
+047afea4868d8b4ce8e7d6ca9eec9c82e3fe2161 add extra security
+ad68cc6e2a786c4e671a6a00d6f7066dc1a49fc3 added index.php
+```
+
+We see some ineresting infromatinon the the commit "add extra security"
+
+```
+git show 047afea4868d8b4ce8e7d6ca9eec9c82e3fe2161
+
+```
+
 #### Other...
 
 ## References
