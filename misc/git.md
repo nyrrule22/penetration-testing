@@ -134,14 +134,28 @@ kali@kali:~/ctf/thm/harder/pwd_harder_local$ git log --pretty=oneline
 ad68cc6e2a786c4e671a6a00d6f7066dc1a49fc3 added index.php
 ```
 
-We see some ineresting infromatinon the the commit "add extra security"
+We see some interesting information the the commit "add extra security"
 
-```
+```bash
 git show 047afea4868d8b4ce8e7d6ca9eec9c82e3fe2161
-
+# We find some interesting files: auth.php, hmac.php, secret.php, and credentials .php
 ```
 
-#### Other...
+Also used a script from [GitTools ](https://github.com/internetwache/GitTools)to dump all the files from Git.
+
+```bash
+/opt/GitTools/Dumper/gitdumper.sh http://pwd.harder.local/.git/ .
+```
+
+When running `git status` we see 4 files that were deleted that look interesting.
+
+We can get these files back again using GitTools
+
+```bash
+/opt/GitTools/Extractor/extractor.sh ~/ctf/thm/harder/pwd_harder_local/git/ extracted/
+```
+
+### Other...
 
 ## References
 
