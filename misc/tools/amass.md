@@ -1,19 +1,18 @@
 ---
-description: https://github.com/tomnomnom/assetfinder
+description: https://github.com/OWASP/Amass
 ---
 
-# assetfinder
+# Amass
 
 ## Examples
 
 ```bash
-assetfinder tesla.com
-assetfinder --subs-only tesla.com
+amass enum -d tesla.com
 ```
 
 ## Script
 
-Updated version with Amass.
+Combined with assetfinder script. Updated version with Httprobe.
 
 ```bash
 #!/bin/bash
@@ -30,4 +29,9 @@ echo "[+] Harvesting subdomains with assetfinder..."
 assetfinder $url >> $url/recon/assets.txt
 cat $url/recon/assets.txt | grep $1 >> $url/recon/final.txt
 rm $url/recon/assets.txt
+
+echo "[+] Harvesting subdomains with Amass..."
+amass enum -d $url >> $url/recon/f.txt
+sort -u $url/recond/f.txt >> $url/recon/final.txt
+rm $url/recond/f.xt
 ```
