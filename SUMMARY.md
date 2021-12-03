@@ -86,6 +86,7 @@
 ## Wireless
 
 * [WiFi Hacking 101](wireless/page-1.md)
+* [Wireless Penetration Testing](wireless/wireless-penetration-testing.md)
 
 ## Phishing
 
