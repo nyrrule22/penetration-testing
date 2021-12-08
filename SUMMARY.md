@@ -78,6 +78,8 @@
 ## Active Directory
 
 * [OSCP Items](active-directory/oscp-items.md)
+* [AD Basics](active-directory/ad-basics.md)
+* [Tools](active-directory/tools.md)
 
 ## Mobile
 
