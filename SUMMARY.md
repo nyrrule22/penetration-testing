@@ -75,6 +75,10 @@
   * [What to Look For](privilege-escalation/linux/what-to-look-for.md)
 * [Windows](privilege-escalation/windows.md)
 
+## Active Directory
+
+* [OSCP Items](active-directory/oscp-items.md)
+
 ## Mobile
 
 * [Android](mobile/android/README.md)
@@ -92,10 +96,6 @@
 
 * [Phishing](phishing/phishing.md)
 * [Phishing: HiddenEye](phishing/phishing-hiddeneye.md)
-
-## Active Directory
-
-* [Page 4](active-directory/page-4.md)
 
 ## Misc
 
