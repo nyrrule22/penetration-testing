@@ -3,7 +3,7 @@
 ### 3rd Party Practice
 
 * [x] THM - Active Directory Basics&#x20;
-* [ ] THM - Attacktive Directory&#x20;
+* [x] THM - Attacktive Directory&#x20;
 * [ ] THM - Attacking Kerberos&#x20;
 * [ ] THM - Post Exploitation Basics&#x20;
 * [ ] THM - Holo, Wreath, Throwback (paid)&#x20;
