@@ -81,6 +81,7 @@
 * [AD Basics](active-directory/ad-basics.md)
 * [Tools](active-directory/tools.md)
 * [Attacktive Directory](active-directory/attacktive-directory.md)
+* [Attacking Kerberos](active-directory/attacking-kerberos.md)
 
 ## Mobile
 
