@@ -82,6 +82,11 @@
 * [Tools](active-directory/tools.md)
 * [Attacktive Directory](active-directory/attacktive-directory.md)
 * [Attacking Kerberos](active-directory/attacking-kerberos.md)
+* [Post-Exploitation Basics](active-directory/post-exploitation-basics.md)
+* [PEH](active-directory/peh/README.md)
+  * [Initial Attack Vectors](active-directory/peh/initial-attack-vectors.md)
+  * [Post-Compromise Enumeration](active-directory/peh/post-compromise-enumeration.md)
+  * [Post Compromise Attacks](active-directory/peh/post-compromise-attacks.md)
 
 ## Mobile
 
