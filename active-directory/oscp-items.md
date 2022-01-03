@@ -6,6 +6,7 @@
 * [x] THM - Attacktive Directory&#x20;
 * [x] THM - Attacking Kerberos&#x20;
 * [x] THM - Post Exploitation Basics&#x20;
+* [ ] PWK Material (Mentioned below)
 * [ ] TCM - PEH&#x20;
 * [ ] THM - Holo, Wreath, Throwback (paid)&#x20;
 * [ ] PG Practice - Heist, Hutch, Vault&#x20;
