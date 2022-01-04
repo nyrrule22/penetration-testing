@@ -6,12 +6,18 @@
 * [x] THM - Attacktive Directory&#x20;
 * [x] THM - Attacking Kerberos&#x20;
 * [x] THM - Post Exploitation Basics&#x20;
-* [ ] PWK Material (Mentioned below)
+* [ ] THM - VulNet: Roasted
+* [ ] THM - VulNet: Active
+* [ ] THM - RazorBlack
+* [ ] THM - Enterprise
 * [ ] TCM - PEH&#x20;
-* [ ] THM - Holo, Wreath, Throwback (paid)&#x20;
+* [ ] THM - Holo
+* [ ] THM - Wreath
+* [ ] THM - Throwback (paid)&#x20;
+* [ ] PWK - Material mentioned below
 * [ ] PG Practice - Heist, Hutch, Vault&#x20;
 * [ ] HTB - Paths: Intro to Dante; Active Directory 101;
-* [ ] HTB - ippsec.rocks walkthroughs
+* [ ] HTB - ippsec.rocks walkthroughs (Active, Forest, Fuse, Cascade, Monteverde, Resolute, Intelligence, APT, Mantis)
 
 ### FAQ
 
