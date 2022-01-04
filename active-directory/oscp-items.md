@@ -19,6 +19,28 @@
 * [ ] HTB - Paths: Intro to Dante; Active Directory 101;
 * [ ] HTB - ippsec.rocks walkthroughs (Active, Forest, Fuse, Cascade, Monteverde, Resolute, Intelligence, APT, Mantis)
 
+### Cheat Sheets
+
+#### Mind Map
+
+[https://www.xmind.net/m/5dypm8/](https://www.xmind.net/m/5dypm8/)
+
+#### WADComs
+
+[https://wadcoms.github.io/](https://wadcoms.github.io)
+
+#### Methodology
+
+[https://book.hacktricks.xyz/windows/active-directory-methodology](https://book.hacktricks.xyz/windows/active-directory-methodology)
+
+#### Other
+
+[https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet](https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet)
+
+#### Writeup
+
+[https://infosecwriteups.com/active-directory-penetration-testing-cheatsheet-5f45aa5b44ff](https://infosecwriteups.com/active-directory-penetration-testing-cheatsheet-5f45aa5b44ff)
+
 ### FAQ
 
 #### Will Offensive Security release an exam and lab report template for the new exam?
