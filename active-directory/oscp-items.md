@@ -6,8 +6,8 @@
 * [x] THM - Attacktive Directory&#x20;
 * [x] THM - Attacking Kerberos&#x20;
 * [x] THM - Post Exploitation Basics&#x20;
-* [ ] THM - VulNet: Roasted
-* [ ] THM - VulNet: Active
+* [ ] THM - VulnNet: Roasted
+* [ ] THM - VulnNet: Active
 * [ ] THM - RazorBlack
 * [ ] THM - Enterprise
 * [ ] TCM - PEH&#x20;
