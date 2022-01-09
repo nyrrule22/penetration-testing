@@ -67,6 +67,7 @@
   * [Password Cracking](post-exploitation/passwords/password-cracking.md)
 * [Post Exploitation Basics](post-exploitation/post-exploitation-basics.md)
 * [Tunneling, Port Forwarding, Pivoting, & Exfiltration](post-exploitation/tunneling-port-forwarding-pivoting-and-exfiltration.md)
+* [Port Forwarding](post-exploitation/port-forwarding.md)
 
 ## Privilege Escalation
 
