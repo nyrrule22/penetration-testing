@@ -7,7 +7,7 @@
 * [x] THM - Attacking Kerberos&#x20;
 * [x] THM - Post Exploitation Basics&#x20;
 * [x] THM - VulnNet: Roasted
-* [ ] THM - VulnNet: Active
+* [x] THM - VulnNet: Active
 * [ ] THM - RazorBlack
 * [ ] THM - Enterprise
 * [ ] TCM - PEH&#x20;
