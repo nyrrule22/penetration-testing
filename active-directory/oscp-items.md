@@ -8,16 +8,16 @@
 * [x] THM - Post Exploitation Basics&#x20;
 * [x] THM - VulnNet: Roasted
 * [x] THM - VulnNet: Active
-* [ ] THM - RazorBlack
+* [x] THM - RazorBlack
 * [ ] THM - Enterprise
+* [ ] THM - Zero Logon
 * [ ] TCM - PEH&#x20;
 * [ ] THM - Holo
 * [ ] THM - Wreath
 * [ ] THM - Throwback (paid)&#x20;
 * [ ] PWK - Material mentioned below
 * [ ] PG Practice - Heist, Hutch, Vault&#x20;
-* [ ] HTB - Paths: Intro to Dante; Active Directory 101;
-* [ ] HTB - ippsec.rocks walkthroughs (Active, Forest, Fuse, Cascade, Monteverde, Resolute, Intelligence, APT, Mantis)
+* [ ] HTB - ippsec.rocks walkthroughs (Active, Forest, Fuse, Cascade, Monteverde, Resolute, Intelligence, APT, Mantis); Tracks: Intro to Dante; Active Directory 101;
 
 ### Cheat Sheets
 
