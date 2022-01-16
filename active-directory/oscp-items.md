@@ -11,11 +11,11 @@
 * [x] THM - RazorBlack
 * [ ] THM - Enterprise
 * [ ] THM - Zero Logon
-* [ ] TCM - PEH&#x20;
+* [ ] TCM - PEH
+* [ ] PWK - Material mentioned below
 * [ ] THM - Holo
 * [ ] THM - Wreath
 * [ ] THM - Throwback (paid)&#x20;
-* [ ] PWK - Material mentioned below
 * [ ] PG Practice - Heist, Hutch, Vault&#x20;
 * [ ] HTB - ippsec.rocks walkthroughs (Active, Forest, Fuse, Cascade, Monteverde, Resolute, Intelligence, APT, Mantis); Tracks: Intro to Dante; Active Directory 101;
 
