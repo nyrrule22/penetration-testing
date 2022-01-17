@@ -9,8 +9,8 @@
 * [x] THM - VulnNet: Roasted
 * [x] THM - VulnNet: Active
 * [x] THM - RazorBlack
-* [ ] THM - Enterprise
-* [ ] THM - Zero Logon
+* [x] THM - Enterprise
+* [x] THM - Zero Logon
 * [ ] TCM - PEH
 * [ ] PWK - Material mentioned below
 * [ ] THM - Holo
