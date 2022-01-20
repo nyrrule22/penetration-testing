@@ -4,7 +4,7 @@
 
 ## Domain Enumeration with PowerView
 
-#### Example
+#### Setup
 
 ```powershell
 C:\Users\fcastle\Desktop>powershell -ep bypass
@@ -236,8 +236,26 @@ Disable Windows Defender          6/18/2020 1:00:19 AM
 
 [https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993](https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993)
 
-## Bloodhound Overview and Setup
-
 ## Grabbing Data with Invoke-Bloodhound
+
+> Copied over SharpHound.ps1 to the Windows target machine
+
+#### Setup
+
+```powershell
+C:\Users\fcastle\Desktop>powershell -ep bypass
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Users\fcastle\Desktop> . .\SharpHound.ps1
+```
+
+#### Execution
+
+```powershell
+PS C:\Users\fcastle\Desktop> Invoke-BloodHound -CollectionMethod All -Domain MARVEL.local -ZipFileName file.zip
+```
+
+Copy the zip file locally to Kali and then upload into Bloodhound.
 
 ## Enumerating Domain Data with Bloodhound
