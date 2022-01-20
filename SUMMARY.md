@@ -48,7 +48,6 @@
 ## Pentesting Web
 
 * [Web Testing](pentesting-web/web-testing.md)
-* [CVEs](pentesting-web/cves.md)
 * [Command Injection](pentesting-web/command-injection.md)
 * [Directory Traversal](pentesting-web/directory-traversal.md)
 * [SQLi (SQL Injection)](pentesting-web/sqli-sql-injection/README.md)
@@ -120,6 +119,7 @@
 * [PowerShell](misc/powershell.md)
 * [Python](misc/python.md)
 * [Git](misc/git.md)
+* [CVEs](misc/cves.md)
 * [Tools](misc/tools/README.md)
   * [Amass](misc/tools/amass.md)
   * [assetfinder](misc/tools/assetfinder.md)
