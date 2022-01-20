@@ -110,6 +110,24 @@ Wade Wilson
 SQL Service
 ```
 
+#### Get-UserProperty
+
+```powershell
+PS C:\Users\fcastle\Desktop> Get-UserProperty -Properties pwdlastset
+
+name          pwdlastset
+----          ----------
+Administrator 6/17/2020 4:57:17 PM
+Guest         12/31/1600 4:00:00 PM
+krbtgt        6/17/2020 5:11:21 PM
+Frank Castle  6/17/2020 5:46:31 PM
+Tony Stark    6/17/2020 5:48:27 PM
+Wade Wilson   6/17/2020 5:49:38 PM
+SQL Service   6/17/2020 5:52:09 PM
+```
+
+#### Cheat Sheet
+
 [https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993](https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993)
 
 ## Bloodhound Overview and Setup
