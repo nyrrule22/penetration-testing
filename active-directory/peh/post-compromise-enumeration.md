@@ -1,7 +1,5 @@
 # Post-Compromise Enumeration
 
-## PowerView Overview
-
 ## Domain Enumeration with PowerView
 
 #### Setup
@@ -259,3 +257,18 @@ PS C:\Users\fcastle\Desktop> Invoke-BloodHound -CollectionMethod All -Domain MAR
 Copy the zip file locally to Kali and then upload into Bloodhound.
 
 ## Enumerating Domain Data with Bloodhound
+
+#### Queries
+
+* Find all Domain Admins
+* Find Shortest Paths to Domain Admins
+* Shortest Paths to High Value Targets
+
+#### On Graph Relationship
+
+Access Boxes that have Domain Admin logged in (Green)
+
+* HasSession
+  * Token impersonation; Mimikatz
+* MemberOf
+  * Group that the account belongs to
