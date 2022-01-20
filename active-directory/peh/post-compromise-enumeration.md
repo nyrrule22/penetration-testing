@@ -59,7 +59,7 @@ Partitions                 : {DC=MARVEL,DC=local, CN=Configuration,DC=MARVEL,DC=
 
 Get all policies in the Domain
 
-```
+```powershell
 PS C:\Users\fcastle\Desktop> Get-DomainPolicy
 
 Name                           Value
@@ -71,7 +71,44 @@ Registry Values                {MACHINE\System\CurrentControlSet\Control\Lsa\NoL
 Unicode                        {Unicode}
 ```
 
-#### Cheat Sheet
+```powershell
+PS C:\Users\fcastle\Desktop> (Get-DomainPolicy)."System Access"
+Name Value
+---- -----
+MinimumPasswordAge {1} 
+MaximumPasswordAge {42} 
+LockoutBadCount {0} 
+PasswordComplexity {1} 
+RequireLogonToChangePassword {0} 
+LSAAnonymousNameLookup {0} 
+ForceLogoffWhenHourExpire {0} 
+PasswordHistorySize {24} 
+ClearTextPassword {0} 
+MinimumPasswordLength {7}
+```
+
+#### Get-NetUser
+
+Get a bunch of user details
+
+```powershell
+PS C:\Users\fcastle\Desktop> Get-NetUser
+...
+```
+
+```powershell
+PS C:\Users\fcastle\Desktop> Get-NetUser | select cn
+cn
+--
+Administrator 
+Guest 
+krbtgt 
+Frank 
+Castle 
+Tony Stark 
+Wade Wilson 
+SQL Service
+```
 
 [https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993](https://gist.github.com/HarmJ0y/184f9822b195c52dd50c379ed3117993)
 
