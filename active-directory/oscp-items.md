@@ -11,7 +11,7 @@
 * [x] THM - RazorBlack
 * [x] THM - Enterprise
 * [x] THM - Zero Logon
-* [ ] TCM - PEH
+* [x] TCM - PEH
 * [ ] PWK - Material mentioned below
 * [ ] THM - Holo
 * [ ] THM - Wreath
@@ -21,9 +21,11 @@
 
 ### Cheat Sheets
 
-#### Mind Map
+#### Mind Maps
 
-[https://www.xmind.net/m/5dypm8/](https://www.xmind.net/m/5dypm8/)
+AD - [https://www.xmind.net/m/5dypm8/](https://www.xmind.net/m/5dypm8/)
+
+General Enumeration - [https://www.xmind.net/m/QsNUEz/](https://www.xmind.net/m/QsNUEz/)
 
 #### WADComs
 
@@ -33,13 +35,17 @@
 
 [https://book.hacktricks.xyz/windows/active-directory-methodology](https://book.hacktricks.xyz/windows/active-directory-methodology)
 
-#### Other
+#### Resources
 
 [https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet](https://github.com/S1ckB0y1337/Active-Directory-Exploitation-Cheat-Sheet)
 
-#### Writeup
+[https://zer1t0.gitlab.io/posts/attacking\_ad/](https://zer1t0.gitlab.io/posts/attacking\_ad/)
+
+#### Writeups
 
 [https://infosecwriteups.com/active-directory-penetration-testing-cheatsheet-5f45aa5b44ff](https://infosecwriteups.com/active-directory-penetration-testing-cheatsheet-5f45aa5b44ff)
+
+[https://n0h4ts.medium.com/passing-the-new-oscp-b9fcd434ade7](https://n0h4ts.medium.com/passing-the-new-oscp-b9fcd434ade7)
 
 ### FAQ
 
