@@ -83,6 +83,7 @@
 ## Active Directory
 
 * [OSCP Items](active-directory/oscp-items.md)
+* [PWK PDF Highlights](active-directory/pwk-pdf-highlights.md)
 * [AD Basics](active-directory/ad-basics.md)
 * [Tools](active-directory/tools.md)
 * [Attacktive Directory](active-directory/attacktive-directory.md)
