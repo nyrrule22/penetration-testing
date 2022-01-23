@@ -135,4 +135,28 @@ Returns an internal IP address which also happens to be the Domain Controller. W
 
 ## Authentication
 
+### NTLM Authentication
+
+### Kerberos Authentication
+
+### Cached Credential Storage and Retrieval
+
+### Service Account Attacks
+
+### Low and Slow Password Guessing
+
 ## Lateral Movement Techniques
+
+### Pass the Hash
+
+### Overpass the Hash
+
+### Pass the Ticket
+
+### Distributed Component Object Model
+
+## Persistence
+
+### Golden Tickets
+
+### Domain Controller Synchronization
