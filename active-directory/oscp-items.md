@@ -12,11 +12,12 @@
 * [x] THM - Enterprise
 * [x] THM - Zero Logon
 * [x] TCM - PEH
-* [ ] PWK - Material mentioned below
+* [x] PWK - Active Directory Module
 * [ ] THM - Holo
 * [ ] THM - Wreath
-* [ ] THM - Throwback (paid)&#x20;
-* [ ] PG Practice - Heist, Hutch, Vault&#x20;
+* [ ] ~~THM - Throwback (paid)~~
+* [ ] PWK - Lateral Movement; Assembling the Pieces
+* [ ] ~~PG Practice - Heist, Hutch, Vault~~&#x20;
 * [ ] HTB - ippsec.rocks walkthroughs (Active, Forest, Fuse, Cascade, Monteverde, Resolute, Intelligence, APT, Mantis); Tracks: Intro to Dante; Active Directory 101;
 
 ### Cheat Sheets
