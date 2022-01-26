@@ -65,11 +65,12 @@
 
 ## Post Exploitation
 
+* [Post Exploitation Basics](post-exploitation/post-exploitation-basics.md)
 * [Passwords](post-exploitation/passwords/README.md)
   * [File Password Cracking](post-exploitation/passwords/file-password-cracking.md)
   * [Password Cracking](post-exploitation/passwords/password-cracking.md)
-* [Post Exploitation Basics](post-exploitation/post-exploitation-basics.md)
-* [Tunneling, Port Forwarding, Pivoting, & Exfiltration](post-exploitation/tunneling-port-forwarding-pivoting-and-exfiltration.md)
+* [Exfiltration](post-exploitation/exfiltration.md)
+* [Pivoting](post-exploitation/pivoting.md)
 * [Port Forwarding](post-exploitation/port-forwarding.md)
 
 ## Privilege Escalation
