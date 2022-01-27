@@ -72,6 +72,7 @@
 * [Exfiltration](post-exploitation/exfiltration.md)
 * [Pivoting](post-exploitation/pivoting.md)
 * [Port Forwarding](post-exploitation/port-forwarding.md)
+* [PWK PDF Highlights](post-exploitation/pwk-pdf-highlights.md)
 
 ## Privilege Escalation
 
