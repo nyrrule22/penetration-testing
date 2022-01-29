@@ -121,6 +121,7 @@
 * [Linux](misc/linux.md)
 * [PowerShell](misc/powershell.md)
 * [Python](misc/python.md)
+* [Containers](misc/containers.md)
 * [Git](misc/git.md)
 * [CVEs](misc/cves/README.md)
   * [CVE-2021-1675 (PrintNightmare)](misc/cves/cve-2021-1675-printnightmare.md)
