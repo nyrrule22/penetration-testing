@@ -18,7 +18,9 @@
 * [ ] ~~THM - Throwback (paid)~~
 * [ ] PWK - Lateral Movement; Assembling the Pieces
 * [ ] ~~PG Practice - Heist, Hutch, Vault~~&#x20;
-* [ ] HTB - ippsec.rocks walkthroughs (Active, Forest, Fuse, Cascade, Monteverde, Resolute, Intelligence, APT, Mantis); Tracks: Intro to Dante; Active Directory 101;
+* [ ] HTB - Active Directory 101: Forest, Sauna, Active, Blackfield, Resolute, Reel, Sizzle, Mantis, Cascade, Multimaster with IppSec walkthroughs
+* [ ] HTB - ippsec.rocks additional walkthroughs: Fuse, Monteverde, Intelligence, APT,
+* [ ] HTB - Tracks: Intro to Dante
 
 ### Cheat Sheets
 
