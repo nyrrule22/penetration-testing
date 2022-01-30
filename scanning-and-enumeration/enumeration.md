@@ -16,3 +16,11 @@ TCM's modified script - [https://pastebin.com/MhE6zXVt](https://pastebin.com/MhE
 * Vanquish
 * Sn1per
 * SPARTA
+
+## Ping
+
+> When pinging a machine we can confirm the OS type by the ttl.&#x20;
+>
+> Windows default TTL is 128 which decreases by 1 when a packet traverses a router, so look for 127.
+>
+> Linux default TTL is 64.
