@@ -78,10 +78,7 @@
 
 ## Privilege Escalation
 
-* [Linux](privilege-escalation/linux/README.md)
-  * [Manual Enumeration](privilege-escalation/linux/manual-enumeration.md)
-  * [Automated Enumeration](privilege-escalation/linux/automated-enumeration.md)
-  * [What to Look For](privilege-escalation/linux/what-to-look-for.md)
+* [Linux](privilege-escalation/linux.md)
 * [Windows](privilege-escalation/windows.md)
 
 ## Active Directory
