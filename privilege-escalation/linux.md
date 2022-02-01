@@ -342,6 +342,8 @@ docker run -v /:/mnt --rm -it bash chroot /mnt sh
 
 [https://github.com/lucyoa/kernel-exploits](https://github.com/lucyoa/kernel-exploits)
 
+[https://github.com/SecWiki/linux-kernel-exploits](https://github.com/SecWiki/linux-kernel-exploits)
+
 Should show up in LinEnum or linux-exploit-suggester
 
 ```bash
