@@ -16,6 +16,7 @@ wmic [command]
 whoami
 whoami /priv
 whoami /groups
+whoami /all
 net user  # show users that are on the machine
 net user [user]  # get information about a specific user
 net localgroup administrator  # get users that belong to the administrator group

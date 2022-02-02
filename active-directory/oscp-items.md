@@ -16,10 +16,14 @@
 * [ ] THM - Holo
 * [ ] THM - Wreath
 * [ ] ~~THM - Throwback (paid)~~
-* [ ] PWK - Lateral Movement; Assembling the Pieces
+* [x] PWK - Lateral Movement
+* [ ] PWK - Assembling the Pieces
 * [ ] ~~PG Practice - Heist, Hutch, Vault~~&#x20;
-* [ ] HTB - Active Directory 101: Forest, Sauna, Active, Blackfield, Resolute, Reel, Sizzle, Mantis, Cascade, Multimaster with IppSec walkthroughs
-* [ ] HTB - ippsec.rocks additional walkthroughs: Fuse, Monteverde, Intelligence, APT,
+* [x] HTB - AD 101: Forest, Sauna, Active with IppSec walkthroughs
+* [x] HTB - ippsec.rocks: Fuse
+* [x] HTB - AD 101: Resolute, Cascade
+* [ ] HTB - ippsec.rocks: Monteverde, Intelligence, APT
+* [ ] HTB - AD 101: Blackfield, Reel, Sizzle, Mantis, Multimaster with IppSec walkthroughs
 * [ ] HTB - Tracks: Intro to Dante
 
 ### Cheat Sheets

@@ -36,7 +36,7 @@
   * [WordPress](pentesting-network/80-443-http-s/wordpress.md)
 * [88 (Kerberos)](pentesting-network/88-kerberos.md)
 * [110 (POP3)](pentesting-network/110-pop3.md)
-* [139 (RPC)](pentesting-network/139-rpc.md)
+* [135 (RPC)](pentesting-network/135-rpc.md)
 * [139,445 (SMB)](pentesting-network/139-445-smb.md)
 * [161 (SNMP)](pentesting-network/161-snmp.md)
 * [389 (LDAP)](pentesting-network/389-ldap.md)
