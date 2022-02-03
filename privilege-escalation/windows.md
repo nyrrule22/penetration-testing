@@ -376,6 +376,13 @@ echo C:\PrivEsc\reverse.exe >> <script-name>
 ### Insecure GUI Apps
 
 ```powershell
+# In older verions of Windows, users could be granted permissions to run certain GUI apps with admin privileges
+# Example - MS Paint
+1. Open up the MS Paint application
+2. tasklist /V | findstr mspaint.exe  # Shows running as admin privileges
+3. In MS Paint, click File --> Open
+4. Click in the navigation bar and go to 'file://c:/windows/system32/cmd.exe
+5. A Command Prompt shoudl spawn and should be running with admin privileges
 ```
 
 ### Startup Apps
