@@ -151,6 +151,13 @@ net group "Exchange Windows Permissions" /add <username>  # Add user to group in
 # Will most likely use PowerView for the Abuse
 ```
 
+#### bloodhound.py
+
+```bash
+python3.8 bloodhound.py -ns <IP> -d intelligence.htb -dc dc.intelligence.htb -u <username> -p <password> -c All
+# Start neo4j an dupload the output to Bloodhoun
+```
+
 ### neo4j
 
 ```bash
