@@ -34,6 +34,8 @@ AD - [https://www.xmind.net/m/5dypm8/](https://www.xmind.net/m/5dypm8/)
 
 General Enumeration - [https://www.xmind.net/m/QsNUEz/](https://www.xmind.net/m/QsNUEz/)
 
+[https://www.thehacker.recipes/](https://www.thehacker.recipes)
+
 #### WADComs
 
 [https://wadcoms.github.io/](https://wadcoms.github.io)
