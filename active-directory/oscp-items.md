@@ -36,6 +36,8 @@ General Enumeration - [https://www.xmind.net/m/QsNUEz/](https://www.xmind.net/m/
 
 [https://www.thehacker.recipes/](https://www.thehacker.recipes)
 
+[https://www.ired.team/](https://www.ired.team)
+
 #### WADComs
 
 [https://wadcoms.github.io/](https://wadcoms.github.io)
