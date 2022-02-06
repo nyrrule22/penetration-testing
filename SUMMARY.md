@@ -83,12 +83,8 @@
 
 ## Active Directory
 
-* [OSCP Items](active-directory/oscp-items.md)
-* [PWK PDF Highlights](active-directory/pwk-pdf-highlights.md)
 * [AD Basics](active-directory/ad-basics.md)
 * [Tools](active-directory/tools.md)
-* [Attacktive Directory](active-directory/attacktive-directory.md)
-* [Attacking Kerberos](active-directory/attacking-kerberos.md)
 * [Post-Exploitation Basics](active-directory/post-exploitation-basics.md)
 * [PEH](active-directory/peh/README.md)
   * [Initial Attack Vectors](active-directory/peh/initial-attack-vectors.md)
