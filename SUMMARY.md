@@ -13,11 +13,8 @@
 
 ## Scanning & Enumeration
 
-* [Netdiscover](scanning-and-enumeration/netdiscover.md)
-* [Arp-scan](scanning-and-enumeration/arp-scan.md)
-* [Nmap](scanning-and-enumeration/nmap.md)
-* [Nessus](scanning-and-enumeration/nessus.md)
-* [OpenVAS](scanning-and-enumeration/openvas.md)
+* [Network Scanning](scanning-and-enumeration/network-scanning.md)
+* [Vulnerability Scanning](scanning-and-enumeration/vulnerability-scanning.md)
 * [Enumeration](scanning-and-enumeration/enumeration.md)
 
 ## Pentesting Network
@@ -74,7 +71,6 @@
 * [Exfiltration](post-exploitation/exfiltration.md)
 * [Pivoting](post-exploitation/pivoting.md)
 * [Port Forwarding](post-exploitation/port-forwarding.md)
-* [PWK PDF Highlights](post-exploitation/pwk-pdf-highlights.md)
 
 ## Privilege Escalation
 
@@ -85,7 +81,6 @@
 
 * [AD Basics](active-directory/ad-basics.md)
 * [Tools](active-directory/tools.md)
-* [Post-Exploitation Basics](active-directory/post-exploitation-basics.md)
 * [PEH](active-directory/peh/README.md)
   * [Initial Attack Vectors](active-directory/peh/initial-attack-vectors.md)
   * [Post-Compromise Enumeration](active-directory/peh/post-compromise-enumeration.md)
