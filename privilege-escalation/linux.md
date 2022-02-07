@@ -13,6 +13,7 @@ lscpu
 ps aux
 cat /etc/crontab
 crontab -e  # check for a specific user
+crontab -l
 cat /var/log/syslog | grep root
 find / -type f -perm -4000 2>/dev/null, find / -perm -u=s -type f 2>/dev/null  # SUID
 find / -type f -perm -2000 2>/dev/null  # GUID
