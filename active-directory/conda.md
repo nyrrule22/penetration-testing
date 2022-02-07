@@ -37,7 +37,7 @@ bloodhound-python -u <username> -p <password> -ns <IP> -d <domain.local> -c All
 
 ## AS-REP Roasting
 
-> Need to have a username or list of usernames to perform
+> Must have a username or list of usernames to perform
 
 ### GetNPUsers
 
