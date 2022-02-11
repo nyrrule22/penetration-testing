@@ -2,21 +2,6 @@
 
 * [README](README.md)
 
-## Penetration Testing Methodology
-
-* [5 Stages of Ethical Hacking](penetration-testing-methodology/5-stages-of-ethical-hacking.md)
-* [The Cyber Kill Chain](penetration-testing-methodology/the-cyber-kill-chain.md)
-
-## Information Gathering (Reconnaissance)
-
-* [Passive Reconnaissance](information-gathering-reconnaissance/passive-reconnaissance.md)
-
-## Scanning & Enumeration
-
-* [Network Scanning](scanning-and-enumeration/network-scanning.md)
-* [Vulnerability Scanning](scanning-and-enumeration/vulnerability-scanning.md)
-* [Enumeration](scanning-and-enumeration/enumeration.md)
-
 ## Pentesting Network
 
 * [21 (FTP)](pentesting-network/21-ftp.md)
@@ -52,25 +37,6 @@
 * [SQLi (SQL Injection)](pentesting-web/sqli-sql-injection/README.md)
   * [Checklists](pentesting-web/sqli-sql-injection/checklists.md)
 * [XXE (XML External Entity)](pentesting-web/xxe-xml-external-entity.md)
-
-## Exploitation
-
-* [Exploitation Basics](exploitation/exploitation-basics.md)
-* [Metasploit](exploitation/metasploit.md)
-* [Shells](exploitation/shells/README.md)
-  * [Linux Shells](exploitation/shells/linux-shells.md)
-  * [Windows Shells](exploitation/shells/windows-shells.md)
-  * [MSFvenom](exploitation/shells/msfvenom.md)
-
-## Post Exploitation
-
-* [Post Exploitation Basics](post-exploitation/post-exploitation-basics.md)
-* [Passwords](post-exploitation/passwords/README.md)
-  * [File Password Cracking](post-exploitation/passwords/file-password-cracking.md)
-  * [Password Cracking](post-exploitation/passwords/password-cracking.md)
-* [Exfiltration](post-exploitation/exfiltration.md)
-* [Pivoting](post-exploitation/pivoting.md)
-* [Port Forwarding](post-exploitation/port-forwarding.md)
 
 ## Privilege Escalation
 
